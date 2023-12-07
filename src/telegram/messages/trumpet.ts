@@ -9,6 +9,8 @@ export const trumpetMsg = (calcs: Calculations): string => {
   return `
 <b><a href="https://elephant.money/trumpet.html">🎺 TRUMPET 🎺</a></b>
 
+<i>1st Mint:</i> <b>${calcs.trumpet1stMint}</b>
+
 <i>TRUNK Price:</i> <b>$${numFor3.format(calcs.trunkBusdPrice)}</b>
 
 <i>Backed Supply:</i> <b>${formatNumberWithSuffix(

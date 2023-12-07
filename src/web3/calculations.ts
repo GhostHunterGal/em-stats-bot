@@ -1,7 +1,9 @@
 import { BlockchainData } from './multicall';
 import { elephantTotalSupply } from '../web3/contracts';
+import { timePassedSince } from '../utils/misc';
 
 export interface Calculations {
+  elephantStart: string;
   elephantWbnbReserve0: number;
   elephantWbnbReserve1: number;
   elephantBusdReserve0: number;
@@ -16,16 +18,19 @@ export interface Calculations {
   berthaValue: number;
   lpElephantBalance: number;
   herdElephantBalance: number;
+  trunkStart: string;
   trunkBusdReserve0: number;
   trunkBusdReserve1: number;
   trunkBusdPrice: number;
   trunkBusdLiquidity: number;
+  trumpet1stMint: string;
   trumpetTotalUsers: number;
   trumpetTxs: number;
   trumpetUnderlyingSupply: number;
   trumpetSupply: number;
   trumpetPrice: number;
   trumpetDollarPrice: number;
+  futures1stDeposit: string;
   futuresTotalUsers: number;
   futuresTotalDeposited: number;
   futuresTotalCompoundDeposited: number;
@@ -35,6 +40,7 @@ export interface Calculations {
   dailyLiabilities: number;
   dailyLiabilitiesAsPercentage: number;
   withdrawals: number;
+  nft1stMint: string;
   mintValue: number;
   nftTotalSupplyValue: number;
   minterDepositedValue: number;
@@ -60,6 +66,9 @@ export interface Calculations {
 
 export const doCalcs = async (data: BlockchainData) => {
   // ELEPHANT DATA
+  // const elephantStart = timePassedSince(1620170041);  // 05/04
+  const elephantStart = timePassedSince(1620774862); // 05/11
+
   const [elephantWbnbReserve0, elephantWbnbReserve1] =
     data.elephantWbnbReserves as [number, number];
 
@@ -101,6 +110,8 @@ export const doCalcs = async (data: BlockchainData) => {
     lpElephantBalance;
 
   // TRUNK DATA
+  const trunkStart = timePassedSince(1634606700);
+
   const [trunkBusdReserve0, trunkBusdReserve1] = data.trunkBusdReserves as [
     number,
     number
@@ -114,6 +125,8 @@ export const doCalcs = async (data: BlockchainData) => {
     trunkBusdReserve1 * Number(data.busdPrice) * 2;
 
   // TRUMPET DATA
+  const trumpet1stMint = timePassedSince(1677896068);
+
   const [
     trumpetTotalUsers,
     trumpetTxs,
@@ -125,6 +138,8 @@ export const doCalcs = async (data: BlockchainData) => {
   const trumpetDollarPrice = trumpetPrice * trunkBusdPrice;
 
   // FUTURES DATA
+  const futures1stDeposit = timePassedSince(1674328800);
+
   const [
     futuresTotalUsers,
     futuresTotalDeposited,
@@ -150,6 +165,8 @@ export const doCalcs = async (data: BlockchainData) => {
   const dailyLiabilitiesAsPercentage = (dailyLiabilities / berthaValue) * 100;
 
   // NFT DATA
+  const nft1stMint = timePassedSince(1688522727);
+
   const mintValue = Number(data.unlimitedNftPrice) * Number(data.bnbPrice);
   const marketPlaceValue =
     Number(data.unlimitedNftMarketplacePrice) * Number(data.bnbPrice);
@@ -226,6 +243,7 @@ export const doCalcs = async (data: BlockchainData) => {
   const busdLpPercentChange = (busdLpValue / currentBusdLpValue) * 100;
 
   return {
+    elephantStart: elephantStart,
     elephantWbnbReserve0: elephantWbnbReserve0,
     elephantWbnbReserve1: elephantWbnbReserve1,
     elephantBusdReserve0: elephantBusdReserve0,
@@ -240,16 +258,19 @@ export const doCalcs = async (data: BlockchainData) => {
     berthaValue: berthaValue,
     lpElephantBalance: lpElephantBalance,
     herdElephantBalance: herdElephantBalance,
+    trunkStart: trunkStart,
     trunkBusdReserve0: trunkBusdReserve0,
     trunkBusdReserve1: trunkBusdReserve1,
     trunkBusdPrice: trunkBusdPrice,
     trunkBusdLiquidity: trunkBusdLiquidity,
+    trumpet1stMint: trumpet1stMint,
     trumpetTotalUsers: trumpetTotalUsers,
     trumpetTxs: trumpetTxs,
     trumpetUnderlyingSupply: trumpetUnderlyingSupply,
     trumpetSupply: trumpetSupply,
     trumpetPrice: trumpetPrice,
     trumpetDollarPrice: trumpetDollarPrice,
+    futures1stDeposit: futures1stDeposit,
     futuresTotalUsers: futuresTotalUsers,
     futuresTotalDeposited: futuresTotalDeposited,
     futuresTotalCompoundDeposited: futuresTotalCompoundDeposited,
@@ -260,6 +281,7 @@ export const doCalcs = async (data: BlockchainData) => {
     dailyLiabilitiesAsPercentage: dailyLiabilitiesAsPercentage,
     withdrawals: withdrawals,
     mintValue: mintValue,
+    nft1stMint: nft1stMint,
     nftTotalSupplyValue: nftTotalSupplyValue,
     minterDepositedValue: minterDepositedValue,
     bertha1Percent: bertha1Percent,

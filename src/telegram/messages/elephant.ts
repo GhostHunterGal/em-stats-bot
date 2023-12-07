@@ -49,6 +49,8 @@ export const elephantMsg = (
   return `
 <b><a href="https://elephant.money/dashboard.html">🐘 ELEPHANT MONEY 🐘</a></b>
 
+<i>Launched:</i> <b>${calcs.elephantStart}</b>
+
 <i>Market Cap:</i> <b>$${formatNumberWithSuffix(calcs.marketCap)}</b>
 <i>Total Liquidity:</i> <b>$${formatNumberWithSuffix(
     calcs.totalElephantLiquidity

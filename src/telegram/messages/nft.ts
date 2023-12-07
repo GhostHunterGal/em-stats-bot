@@ -26,6 +26,8 @@ export const nftMsg = (data: BlockchainData, calcs: Calculations): string => {
   return `
 <b><a href="https://elephant.money/unlimited.html">◼️ UNLIMITED NFT ◼️</a></b>
 
+<i>1st Mint:</i> <b>${calcs.nft1stMint}</b>
+
 <i>BNB Price:</i> <b>$${numFor2.format(Number(data.bnbPrice))}</b>
 
 <u>Mint</u>
