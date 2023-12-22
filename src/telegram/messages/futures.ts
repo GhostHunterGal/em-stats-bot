@@ -6,28 +6,31 @@ export const futuresMsg = (
   data: BlockchainData,
   calcs: Calculations
 ): string => {
-  return `
+  const msg = `
 <b><a href="https://elephant.money/futures.html">🪙 FUTURES 🪙</a></b>
-
+  
 <i>1st Deposit:</i> <b>${calcs.futures1stDeposit}</b>
-
+  
 <u>BUSD Liabilities</u>
 <i>TVL:</i> <b>${formatNumberWithSuffix(calcs.futuresCurrentBalance)}</b>
 <i>Daily:</i> <b>${formatNumberWithSuffix(
     calcs.dailyLiabilities
   )} (${numFor2.format(calcs.dailyLiabilitiesAsPercentage)}% of Bertha)</b>
-
+  
 <u>Givers of Yield</u>
 <i>BUSD Buffer Pool:</i> <b>${formatNumberWithSuffix(
-    Number(data.bufferPoolBusdBalance)
+    data.bufferPoolBusdBalance
   )}</b>
 <i>Bertha:</i> <b>${formatNumberWithSuffix(
-    Number(data.berthaElephantBalance)
+    data.berthaElephantBalance
   )}</b> <b>($${formatNumberWithSuffix(calcs.berthaValue)})</b>
 <i>BUSD Treasury:</i> <b>${formatNumberWithSuffix(
-    Number(data.busdTreasuryBusdBalance)
+    data.busdTreasuryBusdBalance
   )}</b>
-
+<i>BNB Reserve:</i> <b>${formatNumberWithSuffix(
+    data.bnbReserveBnbBalance
+  )} ($${formatNumberWithSuffix(calcs.bnbReserveValue)})</b>
+  
 <u>Activity</u>
 <i>Deposits:</i> <b>${formatNumberWithSuffix(
     calcs.futuresTotalDeposited
@@ -40,4 +43,6 @@ export const futuresMsg = (
 <i>Participants:</i> <b>${formatNumberWithSuffix(calcs.futuresTotalUsers)}</b>
 <i>Transactions:</i> <b>${formatNumberWithSuffix(calcs.futuresTotalTxs)}</b>
 `;
+
+  return msg;
 };

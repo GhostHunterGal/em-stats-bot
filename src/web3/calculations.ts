@@ -40,6 +40,7 @@ export interface Calculations {
   dailyLiabilities: number;
   dailyLiabilitiesAsPercentage: number;
   withdrawals: number;
+  bnbReserveValue: number;
   nft1stMint: string;
   mintValue: number;
   nftTotalSupplyValue: number;
@@ -70,17 +71,16 @@ export const doCalcs = async (data: BlockchainData) => {
   const elephantStart = timePassedSince(1620774862); // 05/11
 
   const [elephantWbnbReserve0, elephantWbnbReserve1] =
-    data.elephantWbnbReserves as [number, number];
-
+    data.elephantWbnbReserves;
   const [elephantBusdReserve0, elephantBusdReserve1] =
-    data.elephantBusdReserves as [number, number];
+    data.elephantBusdReserves;
 
   const elephantWbnbRatio = elephantWbnbReserve0 / elephantWbnbReserve1;
   const elephantBusdRatio = elephantBusdReserve1 / elephantBusdReserve0;
 
   const [elephantWbnbPrice, elephantBusdPrice] = [
-    elephantWbnbRatio * Number(data.bnbPrice),
-    elephantBusdRatio * Number(data.busdPrice),
+    elephantWbnbRatio * data.bnbPrice,
+    elephantBusdRatio * data.busdPrice,
   ];
 
   const elephantWbnbPricePerMillion = elephantWbnbPrice * 1_000_000;
@@ -92,37 +92,31 @@ export const doCalcs = async (data: BlockchainData) => {
 
   const supplyAdjustedPrice = marketCap / 21_000_000;
 
-  const elephantWbnbLiquidity =
-    elephantWbnbReserve0 * Number(data.bnbPrice) * 2;
-  const elephantBusdLiquidity =
-    elephantBusdReserve1 * Number(data.busdPrice) * 2;
+  const elephantWbnbLiquidity = elephantWbnbReserve0 * data.bnbPrice * 2;
+  const elephantBusdLiquidity = elephantBusdReserve1 * data.busdPrice * 2;
 
   const totalElephantLiquidity = elephantWbnbLiquidity + elephantBusdLiquidity;
 
-  const berthaValue = Number(data.berthaElephantBalance) * elephantWbnbPrice;
+  const berthaValue = data.berthaElephantBalance * elephantWbnbPrice;
   const lpElephantBalance = elephantWbnbReserve1 + elephantBusdReserve0;
 
   const herdElephantBalance =
     elephantTotalSupply -
-    Number(data.liquidityDriveEventElephantBalance) -
-    Number(data.graveyardElephantBalance) -
-    Number(data.berthaElephantBalance) -
+    data.liquidityDriveEventElephantBalance -
+    data.graveyardElephantBalance -
+    data.berthaElephantBalance -
     lpElephantBalance;
 
   // TRUNK DATA
   const trunkStart = timePassedSince(1634606700);
 
-  const [trunkBusdReserve0, trunkBusdReserve1] = data.trunkBusdReserves as [
-    number,
-    number
-  ];
+  const [trunkBusdReserve0, trunkBusdReserve1] = data.trunkBusdReserves;
 
   const trunkBusdRatio = trunkBusdReserve1 / trunkBusdReserve0;
 
-  const trunkBusdPrice = trunkBusdRatio * Number(data.busdPrice);
+  const trunkBusdPrice = trunkBusdRatio * data.busdPrice;
 
-  const trunkBusdLiquidity: number =
-    trunkBusdReserve1 * Number(data.busdPrice) * 2;
+  const trunkBusdLiquidity = trunkBusdReserve1 * data.busdPrice * 2;
 
   // TRUMPET DATA
   const trumpet1stMint = timePassedSince(1677896068);
@@ -133,7 +127,7 @@ export const doCalcs = async (data: BlockchainData) => {
     trumpetUnderlyingSupply,
     trumpetSupply,
     trumpetPrice,
-  ] = data.trumpetInfo as [number, number, number, number, number];
+  ] = data.trumpetInfo;
 
   const trumpetDollarPrice = trumpetPrice * trunkBusdPrice;
 
@@ -148,48 +142,37 @@ export const doCalcs = async (data: BlockchainData) => {
     futuresTotalRewards,
     futuresTotalTxs,
     futuresCurrentBalance,
-  ] = data.futuresInfo as [
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number
-  ];
+  ] = data.futuresInfo;
 
-  const dailyLiabilities: number = futuresCurrentBalance / 200;
-  const withdrawals: number =
-    futuresTotalClaimed - futuresTotalCompoundDeposited;
+  const dailyLiabilities = futuresCurrentBalance / 200;
+  const withdrawals = futuresTotalClaimed - futuresTotalCompoundDeposited;
 
   const dailyLiabilitiesAsPercentage = (dailyLiabilities / berthaValue) * 100;
+
+  const bnbReserveValue = data.bnbReserveBnbBalance * data.bnbPrice;
 
   // NFT DATA
   const nft1stMint = timePassedSince(1688522727);
 
-  const mintValue = Number(data.unlimitedNftPrice) * Number(data.bnbPrice);
-  const marketPlaceValue =
-    Number(data.unlimitedNftMarketplacePrice) * Number(data.bnbPrice);
+  const mintValue = data.unlimitedNftPrice * data.bnbPrice;
+  const marketPlaceValue = data.unlimitedNftMarketplacePrice * data.bnbPrice;
 
-  const bertha1Percent = Number(data.berthaElephantBalance) * 0.01;
-  const bertha1PercentValue: number = berthaValue * 0.01;
+  const bertha1Percent = data.berthaElephantBalance * 0.01;
+  const bertha1PercentValue = berthaValue * 0.01;
   const bertha1PercentHighestValue = bertha1Percent * higherElephantPrice;
 
   const nftStakingRewardsValue =
-    Number(data.unlimitedNftStakingTotalRewards) * higherElephantPrice;
+    data.unlimitedNftStakingTotalRewards * higherElephantPrice;
 
-  const minterDepositedValue =
-    Number(data.unlimitedNftMinterDeposited) * Number(data.bnbPrice);
+  const minterDepositedValue = data.unlimitedNftMinterDeposited * data.bnbPrice;
 
   const nftTotalSupplyValue =
-    Number(data.unlimitedNftTotalSupply) *
-    Number(data.bnbPrice) *
-    Number(data.unlimitedNftPrice);
+    data.unlimitedNftTotalSupply * data.bnbPrice * data.unlimitedNftPrice;
 
   const nftStakingTotalSupplyValue =
-    Number(data.unlimitedNftStakingTotalSupply) *
-    Number(data.bnbPrice) *
-    Number(data.unlimitedNftPrice);
+    data.unlimitedNftStakingTotalSupply *
+    data.bnbPrice *
+    data.unlimitedNftPrice;
 
   // STRESS TEST DATA
   const wbnbK = elephantWbnbReserve0 * elephantWbnbReserve1;
@@ -198,7 +181,7 @@ export const doCalcs = async (data: BlockchainData) => {
   const eightPercentOfHerd = herdElephantBalance * 0.08;
   const herdElephantBalanceAfterfee = herdElephantBalance - eightPercentOfHerd;
   const berthaElephantBalanceAfterMassSell =
-    Number(data.berthaElephantBalance) + eightPercentOfHerd;
+    data.berthaElephantBalance + eightPercentOfHerd;
 
   const wbnbLpElephantPercentage = elephantWbnbReserve1 / lpElephantBalance;
   const busdLpElephantPercentage = elephantBusdReserve0 / lpElephantBalance;
@@ -214,30 +197,30 @@ export const doCalcs = async (data: BlockchainData) => {
   const wbnbLpAfterMassSell = wbnbK / wbnbLpElephantAfterMassSell;
   const busdLpAfterMassSell = busdK / busdLpElephantAfterMassSell;
 
-  const wbnbLpValueAfterMassSell = wbnbLpAfterMassSell * Number(data.bnbPrice);
-  const busdLpValueAfterMassSell = busdLpAfterMassSell * Number(data.busdPrice);
+  const wbnbLpValueAfterMassSell = wbnbLpAfterMassSell * data.bnbPrice;
+  const busdLpValueAfterMassSell = busdLpAfterMassSell * data.busdPrice;
 
   const wbnbLpLiquidityAfterMassSell = wbnbLpValueAfterMassSell * 2;
   const busdLpLiquidityAfterMassSell = busdLpValueAfterMassSell * 2;
 
   const newElephantWbnbPrice =
     (wbnbLpAfterMassSell / wbnbLpElephantAfterMassSell) *
-    Number(data.bnbPrice) *
+    data.bnbPrice *
     1_000_000;
 
   const newElephantBusdPrice =
     (busdLpAfterMassSell / busdLpElephantAfterMassSell) *
-    Number(data.busdPrice) *
+    data.busdPrice *
     1_000_000;
 
   const berthaValueAfterMassSell =
     (berthaElephantBalanceAfterMassSell * newElephantWbnbPrice) / 1_000_000;
 
-  const currentWbnbLpValue = elephantWbnbReserve0 * Number(data.bnbPrice);
-  const currentBusdLpValue = elephantBusdReserve1 * Number(data.busdPrice);
+  const currentWbnbLpValue = elephantWbnbReserve0 * data.bnbPrice;
+  const currentBusdLpValue = elephantBusdReserve1 * data.busdPrice;
 
-  const wbnbLpValue = wbnbLpAfterMassSell * Number(data.bnbPrice);
-  const busdLpValue = busdLpAfterMassSell * Number(data.busdPrice);
+  const wbnbLpValue = wbnbLpAfterMassSell * data.bnbPrice;
+  const busdLpValue = busdLpAfterMassSell * data.busdPrice;
 
   const wbnbLpPercentChange = (wbnbLpValue / currentWbnbLpValue) * 100;
   const busdLpPercentChange = (busdLpValue / currentBusdLpValue) * 100;
@@ -280,6 +263,7 @@ export const doCalcs = async (data: BlockchainData) => {
     dailyLiabilities: dailyLiabilities,
     dailyLiabilitiesAsPercentage: dailyLiabilitiesAsPercentage,
     withdrawals: withdrawals,
+    bnbReserveValue: bnbReserveValue,
     mintValue: mintValue,
     nft1stMint: nft1stMint,
     nftTotalSupplyValue: nftTotalSupplyValue,

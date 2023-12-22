@@ -6,13 +6,13 @@ import {
 } from '../../utils/formats.js';
 
 export const trumpetMsg = (calcs: Calculations): string => {
-  return `
+  const msg = `
 <b><a href="https://elephant.money/trumpet.html">🎺 TRUMPET 🎺</a></b>
-
+  
 <i>1st Mint:</i> <b>${calcs.trumpet1stMint}</b>
-
+  
 <i>TRUNK Price:</i> <b>$${numFor3.format(calcs.trunkBusdPrice)}</b>
-
+  
 <i>Backed Supply:</i> <b>${formatNumberWithSuffix(
     calcs.trumpetUnderlyingSupply
   )} TRUNK</b>
@@ -20,9 +20,11 @@ export const trumpetMsg = (calcs: Calculations): string => {
 <i>TRUNK/TRUMPET:</i> <b>${numFor3.format(
     calcs.trumpetPrice
   )} ($${numFor2.format(calcs.trumpetDollarPrice)})</b>
-
+  
 <u>Activity</u>
 <i>Participants:</i> <b>${formatNumberWithSuffix(calcs.trumpetTotalUsers)}</b>
 <i>Transactions:</i> <b>${formatNumberWithSuffix(calcs.trumpetTxs)}</b>
 `;
+
+  return msg;
 };

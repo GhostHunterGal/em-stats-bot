@@ -1,28 +1,28 @@
-import { formatUnits } from 'viem';
+// import { formatUnits } from 'viem';
 
-export const format = (
-  bigInt: bigint | readonly [bigint, bigint, number] | undefined | unknown,
-  units: number | number[]
-): number | number[] | undefined => {
-  if (typeof bigInt === 'bigint') {
-    const formattedValue = formatUnits(bigInt, Number(units));
+// export const format = (
+//   bigInt: bigint | readonly [bigint, bigint, number] | undefined | unknown,
+//   units: number | number[]
+// ): number | number[] | undefined => {
+//   if (typeof bigInt === 'bigint') {
+//     const formattedValue = formatUnits(bigInt, Number(units));
 
-    return Number(units) > 0
-      ? parseFloat(formattedValue)
-      : Number(formattedValue);
-  } else if (Array.isArray(bigInt) && Array.isArray(units)) {
-    const formattedValues = bigInt.map((val: bigint, index: number) =>
-      Number(units[index]) > 0
-        ? parseFloat(formatUnits(val, Number(units[index])))
-        : Number(formatUnits(val, Number(units[index])))
-    );
+//     return Number(units) > 0
+//       ? parseFloat(formattedValue)
+//       : Number(formattedValue);
+//   } else if (Array.isArray(bigInt) && Array.isArray(units)) {
+//     const formattedValues = bigInt.map((val: bigint, index: number) =>
+//       Number(units[index]) > 0
+//         ? parseFloat(formatUnits(val, Number(units[index])))
+//         : Number(formatUnits(val, Number(units[index])))
+//     );
 
-    return formattedValues;
-  } else {
-    console.error(`Unexpected format`);
-    return undefined;
-  }
-};
+//     return formattedValues;
+//   } else {
+//     console.error(`Unexpected format`);
+//     return undefined;
+//   }
+// };
 
 export const formatNumberWithSuffix = (value: number): string => {
   const suffixes: string[] = ['', 'K', 'M', 'B', 'T'];

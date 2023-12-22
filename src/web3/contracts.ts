@@ -124,4 +124,8 @@ export const contracts = {
     address: '0xCb5a02BB3a38e92E591d323d6824586608cE8cE4',
     abi: [],
   },
+  bnbReserve: {
+    address: '0x98F6c7c953Cf4cef0fd632b2509c9e349687FC92',
+    abi: [],
+  },
 } as const;

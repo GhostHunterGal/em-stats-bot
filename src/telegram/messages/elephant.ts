@@ -15,11 +15,11 @@ export const elephantMsg = (
   const distribution = [
     {
       label: 'Bertha',
-      elephantBalance: Number(data.berthaElephantBalance),
+      elephantBalance: data.berthaElephantBalance,
     },
     {
       label: 'Graveyard',
-      elephantBalance: Number(data.graveyardElephantBalance),
+      elephantBalance: data.graveyardElephantBalance,
     },
     {
       label: 'LPs',
@@ -31,7 +31,7 @@ export const elephantMsg = (
     },
     {
       label: 'LDE',
-      elephantBalance: Number(data.liquidityDriveEventElephantBalance),
+      elephantBalance: data.liquidityDriveEventElephantBalance,
     },
   ];
 
@@ -46,21 +46,21 @@ export const elephantMsg = (
     })
     .join('\n');
 
-  return `
+  const msg = `
 <b><a href="https://elephant.money/dashboard.html">🐘 ELEPHANT MONEY 🐘</a></b>
-
+    
 <i>Launched:</i> <b>${calcs.elephantStart}</b>
-
+    
 <i>Market Cap:</i> <b>$${formatNumberWithSuffix(calcs.marketCap)}</b>
 <i>Total Liquidity:</i> <b>$${formatNumberWithSuffix(
     calcs.totalElephantLiquidity
   )}</b>
 <i>21M SA Price:</i> <b>$${numFor2.format(calcs.supplyAdjustedPrice)}</b>
 <i>Bertha:</i> <b>$${formatNumberWithSuffix(calcs.berthaValue)}</b>
-
+    
 <u>Distribution</u>
 ${formattedDistribution}
-
+    
 <a href="https://www.geckoterminal.com/bsc/pools/0x647bc907d520c3f63be38d01dbd979f5606bec48">ELEPHANT/BUSD</a>
 <i>Liquidity:</i> <b>$${formatNumberWithSuffix(calcs.elephantBusdLiquidity)}</b>
 <i>Pooled BUSD:</i> <b>${formatNumberWithSuffix(calcs.elephantBusdReserve1)}</b>
@@ -68,7 +68,7 @@ ${formattedDistribution}
 <i>Price/1M ELE:</i> <b>$${numFor9.format(
     calcs.elephantBusdPricePerMillion
   )}</b>
-
+    
 <a href="https://www.geckoterminal.com/bsc/pools/0x1cea83ec5e48d9157fcae27a19807bef79195ce1">ELEPHANT/WBNB</a>
 <i>Liquidity:</i> <b>$${formatNumberWithSuffix(calcs.elephantWbnbLiquidity)}</b>
 <i>Pooled WBNB:</i> <b>${formatNumberWithSuffix(calcs.elephantWbnbReserve0)}</b>
@@ -76,7 +76,9 @@ ${formattedDistribution}
 <i>Price/1M ELE:</i> <b>$${numFor9.format(
     calcs.elephantWbnbPricePerMillion
   )}</b>
-
-<i>BNB Price:</i> <b>$${numFor2.format(Number(data.bnbPrice))}</b>
+    
+<i>BNB Price:</i> <b>$${numFor2.format(data.bnbPrice)}</b>
 `;
+
+  return msg;
 };

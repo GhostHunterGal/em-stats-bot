@@ -1,32 +1,33 @@
 import { client } from './client';
 import { contracts, erc20Abi } from './contracts';
-import { format } from '../utils/formats';
+import { formatEther, formatUnits } from 'viem';
 
 export interface BlockchainData {
-  bnbPrice: number | number[] | undefined;
-  busdPrice: number | number[] | undefined;
-  graveyardElephantBalance: number | number[] | undefined;
-  berthaElephantBalance: number | number[] | undefined;
-  liquidityDriveEventElephantBalance: number | number[] | undefined;
-  openLeverageElephantBalance: number | number[] | undefined;
-  elephantWbnbReserves: number | number[] | undefined;
-  elephantBusdReserves: number | number[] | undefined;
-  trunkTotalSupply: number | number[] | undefined;
-  trunkTreasuryBalance: number | number[] | undefined;
-  trunkBusdReserves: number | number[] | undefined;
-  unlimitedNftPrice: number | number[] | undefined;
-  unlimitedNftTotalSupply: number | number[] | undefined;
-  unlimitedNftMinterDeposited: number | number[] | undefined;
-  unlimitedNftStakingTotalRewards: number | number[] | undefined;
-  unlimitedNftStakingTotalSupply: number | number[] | undefined;
-  unlimitedNftMarketplacePrice: number | number[] | undefined;
-  unlimitedNftMarketplaceTotalRevenue: number | number[] | undefined;
-  unlimitedNftMarketplaceTotalSales: number | number[] | undefined;
-  unlimitedNftMarketplaceTotalSupply: number | number[] | undefined;
-  futuresInfo: number | number[] | undefined;
-  bufferPoolBusdBalance: number | number[] | undefined;
-  busdTreasuryBusdBalance: number | number[] | undefined;
-  trumpetInfo: number | number[] | undefined;
+  bnbPrice: number;
+  busdPrice: number;
+  graveyardElephantBalance: number;
+  berthaElephantBalance: number;
+  liquidityDriveEventElephantBalance: number;
+  openLeverageElephantBalance: number;
+  elephantWbnbReserves: number[];
+  elephantBusdReserves: number[];
+  trunkTotalSupply: number;
+  trunkTreasuryBalance: number;
+  trunkBusdReserves: number[];
+  unlimitedNftPrice: number;
+  unlimitedNftTotalSupply: number;
+  unlimitedNftMinterDeposited: number;
+  unlimitedNftStakingTotalRewards: number;
+  unlimitedNftStakingTotalSupply: number;
+  unlimitedNftMarketplacePrice: number;
+  unlimitedNftMarketplaceTotalRevenue: number;
+  unlimitedNftMarketplaceTotalSales: number;
+  unlimitedNftMarketplaceTotalSupply: number;
+  futuresInfo: number[];
+  bufferPoolBusdBalance: number;
+  busdTreasuryBusdBalance: number;
+  trumpetInfo: number[];
+  bnbReserveBnbBalance: number;
 }
 
 export const getBlockchainData = async () => {
@@ -141,31 +142,60 @@ export const getBlockchainData = async () => {
     ],
   });
 
+  const bnbReserveBnbBalance = await client.getBalance({
+    address: contracts.bnbReserve.address,
+  });
+
   const data = {
-    bnbPrice: format(results[0].result, 8),
-    busdPrice: format(results[1].result, 8),
-    graveyardElephantBalance: format(results[2].result, 9),
-    berthaElephantBalance: format(results[3].result, 9),
-    liquidityDriveEventElephantBalance: format(results[4].result, 9),
-    openLeverageElephantBalance: format(results[5].result, 9),
-    elephantWbnbReserves: format(results[6].result, [18, 9]),
-    elephantBusdReserves: format(results[7].result, [9, 18]),
-    trunkTotalSupply: format(results[8].result, 18),
-    trunkTreasuryBalance: format(results[9].result, 18),
-    trunkBusdReserves: format(results[10].result, [18, 18]),
-    unlimitedNftPrice: format(results[11].result, 18),
-    unlimitedNftTotalSupply: format(results[12].result, 0),
-    unlimitedNftMinterDeposited: format(results[13].result, 18),
-    unlimitedNftStakingTotalRewards: format(results[14].result, 9),
-    unlimitedNftStakingTotalSupply: format(results[15].result, 0),
-    unlimitedNftMarketplacePrice: format(results[16].result, 18),
-    unlimitedNftMarketplaceTotalRevenue: format(results[17].result, 18),
-    unlimitedNftMarketplaceTotalSales: format(results[18].result, 0),
-    unlimitedNftMarketplaceTotalSupply: format(results[19].result, 0),
-    futuresInfo: format(results[20].result, [0, 18, 18, 18, 18, 0, 18]),
-    bufferPoolBusdBalance: format(results[21].result, 18),
-    busdTreasuryBusdBalance: format(results[22].result, 18),
-    trumpetInfo: format(results[23].result, [0, 0, 18, 18, 18]),
+    bnbPrice: Number(formatUnits(results[0].result as bigint, 8)),
+    busdPrice: Number(formatUnits(results[1].result as bigint, 8)),
+    graveyardElephantBalance: Number(
+      formatUnits(results[2].result as bigint, 9)
+    ),
+    berthaElephantBalance: Number(formatUnits(results[3].result as bigint, 9)),
+    liquidityDriveEventElephantBalance: Number(
+      formatUnits(results[4].result as bigint, 9)
+    ),
+    openLeverageElephantBalance: Number(
+      formatUnits(results[5].result as bigint, 9)
+    ),
+    elephantWbnbReserves: (results[6].result as bigint[]).map((value, index) =>
+      index < 1 ? Number(formatEther(value)) : Number(formatUnits(value, 9))
+    ),
+    elephantBusdReserves: (results[7].result as bigint[]).map((value, index) =>
+      index < 1 ? Number(formatUnits(value, 9)) : Number(formatEther(value))
+    ),
+    trunkTotalSupply: Number(formatEther(results[8].result as bigint)),
+    trunkTreasuryBalance: Number(formatEther(results[9].result as bigint)),
+    trunkBusdReserves: (results[10].result as bigint[]).map((value) =>
+      Number(formatEther(value))
+    ),
+    unlimitedNftPrice: Number(formatEther(results[11].result as bigint)),
+    unlimitedNftTotalSupply: Number(results[12].result),
+    unlimitedNftMinterDeposited: Number(
+      formatEther(results[13].result as bigint)
+    ),
+    unlimitedNftStakingTotalRewards: Number(
+      formatUnits(results[14].result as bigint, 9)
+    ),
+    unlimitedNftStakingTotalSupply: Number(results[15].result),
+    unlimitedNftMarketplacePrice: Number(
+      formatEther(results[16].result as bigint)
+    ),
+    unlimitedNftMarketplaceTotalRevenue: Number(
+      formatEther(results[17].result as bigint)
+    ),
+    unlimitedNftMarketplaceTotalSales: Number(results[18].result),
+    unlimitedNftMarketplaceTotalSupply: Number(results[19].result),
+    futuresInfo: (results[20].result as bigint[]).map((value, index) =>
+      index === 0 || index === 5 ? Number(value) : Number(formatEther(value))
+    ),
+    bufferPoolBusdBalance: Number(formatEther(results[21].result as bigint)),
+    busdTreasuryBusdBalance: Number(formatEther(results[22].result as bigint)),
+    trumpetInfo: (results[23].result as bigint[]).map((value, index) =>
+      index <= 1 ? Number(value) : Number(formatEther(value))
+    ),
+    bnbReserveBnbBalance: Number(formatEther(bnbReserveBnbBalance)),
   };
 
   return data;
