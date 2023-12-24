@@ -41,6 +41,7 @@ export interface Calculations {
   dailyLiabilitiesAsPercentage: number;
   withdrawals: number;
   bnbReserveValue: number;
+  futuresDailyYield: number;
   nft1stMint: string;
   mintValue: number;
   nftTotalSupplyValue: number;
@@ -150,6 +151,8 @@ export const doCalcs = async (data: BlockchainData) => {
   const dailyLiabilitiesAsPercentage = (dailyLiabilities / berthaValue) * 100;
 
   const bnbReserveValue = data.bnbReserveBnbBalance * data.bnbPrice;
+
+  const futuresDailyYield = 0.5 * (bnbReserveValue / dailyLiabilities);
 
   // NFT DATA
   const nft1stMint = timePassedSince(1688522727);
@@ -264,6 +267,7 @@ export const doCalcs = async (data: BlockchainData) => {
     dailyLiabilitiesAsPercentage: dailyLiabilitiesAsPercentage,
     withdrawals: withdrawals,
     bnbReserveValue: bnbReserveValue,
+    futuresDailyYield: futuresDailyYield,
     mintValue: mintValue,
     nft1stMint: nft1stMint,
     nftTotalSupplyValue: nftTotalSupplyValue,
