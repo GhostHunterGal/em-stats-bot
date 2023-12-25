@@ -27,6 +27,8 @@ export interface Calculations {
   trunkWbnbReserve1: number;
   trunkWbnbPrice: number;
   trunkWbnbLiquidity: number;
+  trunkMarketCap: number;
+  totalTrunkLiquidity: number;
   trumpet1stMint: string;
   trumpetTotalUsers: number;
   trumpetTxs: number;
@@ -80,25 +82,29 @@ export const doCalcs = async (data: BlockchainData) => {
   const [elephantBusdReserve0, elephantBusdReserve1] =
     data.elephantBusdReserves;
 
-  const elephantWbnbRatio = elephantWbnbReserve0 / elephantWbnbReserve1;
-  const elephantBusdRatio = elephantBusdReserve1 / elephantBusdReserve0;
+  const [elephantWbnbRatio, elephantBusdRatio] = [
+    elephantWbnbReserve0 / elephantWbnbReserve1,
+    elephantBusdReserve1 / elephantBusdReserve0,
+  ];
 
   const [elephantWbnbPrice, elephantBusdPrice] = [
     elephantWbnbRatio * data.bnbPrice,
     elephantBusdRatio * data.busdPrice,
   ];
 
-  const elephantWbnbPricePerMillion = elephantWbnbPrice * 1_000_000;
-  const elephantBusdPricePerMillion = elephantBusdPrice * 1_000_000;
+  const [elephantWbnbPricePerMillion, elephantBusdPricePerMillion] = [
+    elephantWbnbPrice * 1_000_000,
+    elephantBusdPrice * 1_000_000,
+  ];
 
   const higherElephantPrice = Math.max(elephantWbnbPrice, elephantBusdPrice);
-
   const marketCap = higherElephantPrice * elephantTotalSupply;
-
   const supplyAdjustedPrice = marketCap / 21_000_000;
 
-  const elephantWbnbLiquidity = elephantWbnbReserve0 * data.bnbPrice * 2;
-  const elephantBusdLiquidity = elephantBusdReserve1 * data.busdPrice * 2;
+  const [elephantWbnbLiquidity, elephantBusdLiquidity] = [
+    elephantWbnbReserve0 * data.bnbPrice * 2,
+    elephantBusdReserve1 * data.busdPrice * 2,
+  ];
 
   const totalElephantLiquidity = elephantWbnbLiquidity + elephantBusdLiquidity;
 
@@ -116,20 +122,24 @@ export const doCalcs = async (data: BlockchainData) => {
   const trunkStart = timePassedSince(1634606700);
 
   const [trunkBusdReserve0, trunkBusdReserve1] = data.trunkBusdReserves;
-
-  const trunkBusdRatio = trunkBusdReserve1 / trunkBusdReserve0;
-
-  const trunkBusdPrice = trunkBusdRatio * data.busdPrice;
-
-  const trunkBusdLiquidity = trunkBusdReserve1 * data.busdPrice * 2;
-
   const [trunkWbnbReserve0, trunkWbnbReserve1] = data.trunkWbnbReserves;
 
-  const trunkWbnbRatio = trunkWbnbReserve0 / trunkWbnbReserve1;
+  const [trunkBusdRatio, trunkWbnbRatio] = [
+    trunkBusdReserve1 / trunkBusdReserve0,
+    trunkWbnbReserve0 / trunkWbnbReserve1,
+  ];
+  const [trunkBusdPrice, trunkWbnbPrice] = [
+    trunkBusdRatio * data.busdPrice,
+    trunkWbnbRatio * data.bnbPrice,
+  ];
+  const [trunkBusdLiquidity, trunkWbnbLiquidity] = [
+    trunkBusdReserve1 * data.busdPrice * 2,
+    trunkWbnbReserve0 * data.bnbPrice * 2,
+  ];
 
-  const trunkWbnbPrice = trunkWbnbRatio * data.bnbPrice;
-
-  const trunkWbnbLiquidity = trunkWbnbReserve0 * data.bnbPrice * 2;
+  const higherTrunkPrice = Math.max(trunkWbnbPrice, trunkBusdPrice);
+  const trunkMarketCap = higherTrunkPrice * data.trunkTotalSupply;
+  const totalTrunkLiquidity = trunkWbnbLiquidity + trunkBusdLiquidity;
 
   // TRUMPET DATA
   const trumpet1stMint = timePassedSince(1677896068);
@@ -265,6 +275,8 @@ export const doCalcs = async (data: BlockchainData) => {
     trunkWbnbReserve1: trunkWbnbReserve1,
     trunkWbnbPrice: trunkWbnbPrice,
     trunkWbnbLiquidity: trunkWbnbLiquidity,
+    trunkMarketCap: trunkMarketCap,
+    totalTrunkLiquidity: totalTrunkLiquidity,
     trumpet1stMint: trumpet1stMint,
     trumpetTotalUsers: trumpetTotalUsers,
     trumpetTxs: trumpetTxs,

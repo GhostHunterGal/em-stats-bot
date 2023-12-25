@@ -7,7 +7,11 @@ export const trunkMsg = (data: BlockchainData, calcs: Calculations): string => {
 <b><a href="https://elephant.money/trunk.html">🟢 TRUNK 🟢</a></b>
   
 <i>Launched:</i> <b>${calcs.trunkStart}</b>
-  
+
+<i>Market Cap:</i> <b>$${formatNumberWithSuffix(calcs.trunkMarketCap)}</b>
+<i>Total Liquidity:</i> <b>$${formatNumberWithSuffix(
+    calcs.totalTrunkLiquidity
+  )}</b>  
 <i>TRUNK Total Supply:</i> <b>${formatNumberWithSuffix(
     data.trunkTotalSupply
   )}</b>

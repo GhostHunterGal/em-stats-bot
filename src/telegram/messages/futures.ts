@@ -16,7 +16,7 @@ export const futuresMsg = (
 <i>Daily:</i> <b>$${formatNumberWithSuffix(
     calcs.dailyLiabilities
   )} (${numFor2.format(calcs.dailyLiabilitiesAsPercentage)}% of Bertha)</b>
-<i>Est. Daily Yield:</i> <b>${
+<i>Daily Yield:</i> <b>${
     calcs.bnbReserveValue >= calcs.dailyLiabilities
       ? 0.5
       : numFor3.format(calcs.futuresDailyYield)
