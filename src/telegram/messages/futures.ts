@@ -14,10 +14,12 @@ export const futuresMsg = (
 <u>Liabilities</u>
 <i>TVL:</i> <b>$${formatNumberWithSuffix(calcs.futuresCurrentBalance)}</b>
 <i>Daily:</i> <b>$${formatNumberWithSuffix(
-    calcs.dailyLiabilities
-  )} (${numFor2.format(calcs.dailyLiabilitiesAsPercentage)}% of Bertha)</b>
+    calcs.dailyFuturesLiabilities
+  )} (${numFor2.format(
+    calcs.dailyFuturesLiabilitiesAsPercentage
+  )}% of Bertha)</b>
 <i>Daily Yield:</i> <b>${
-    calcs.bnbReserveValue >= calcs.dailyLiabilities
+    calcs.bnbReserveValue >= calcs.dailyFuturesLiabilities
       ? 0.5
       : numFor3.format(calcs.futuresDailyYield)
   }%</b>
@@ -35,7 +37,7 @@ export const futuresMsg = (
 <i>Compounds:</i> <b>$${formatNumberWithSuffix(
     calcs.futuresTotalCompoundDeposited
   )}</b>
-<i>Withdrawals:</i> <b>$${formatNumberWithSuffix(calcs.withdrawals)}</b>
+<i>Withdrawals:</i> <b>$${formatNumberWithSuffix(calcs.futuresWithdrawals)}</b>
 <i>Rewards:</i> <b>$${formatNumberWithSuffix(calcs.futuresTotalRewards)}</b>
 <i>Participants:</i> <b>${formatNumberWithSuffix(calcs.futuresTotalUsers)}</b>
 <i>Transactions:</i> <b>${formatNumberWithSuffix(calcs.futuresTotalTxs)}</b>

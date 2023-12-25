@@ -11,7 +11,7 @@ export const trumpetMsg = (calcs: Calculations): string => {
   
 <i>1st Mint:</i> <b>${calcs.trumpet1stMint}</b>
   
-<i>TRUNK Price:</i> <b>$${numFor3.format(calcs.trunkBusdPrice)}</b>
+<i>TRUNK Price:</i> <b>$${numFor3.format(calcs.higherTrunkPrice)}</b>
   
 <i>Backed Supply:</i> <b>${formatNumberWithSuffix(
     calcs.trumpetUnderlyingSupply

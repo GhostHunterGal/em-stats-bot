@@ -51,7 +51,7 @@ export const elephantMsg = (
     
 <i>Launched:</i> <b>${calcs.elephantStart}</b>
     
-<i>Market Cap:</i> <b>$${formatNumberWithSuffix(calcs.marketCap)}</b>
+<i>Market Cap:</i> <b>$${formatNumberWithSuffix(calcs.elephantMarketCap)}</b>
 <i>Total Liquidity:</i> <b>$${formatNumberWithSuffix(
     calcs.totalElephantLiquidity
   )}</b>

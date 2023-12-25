@@ -32,18 +32,18 @@ export const nftMsg = (data: BlockchainData, calcs: Calculations): string => {
   
 <u>Mint</u>
 <i>Price:</i> <b>${data.unlimitedNftPrice} BNB ($${numFor2.format(
-    calcs.mintValue
+    calcs.nftMintValue
   )})</b>
 <i>Supply:</i> <b>${formatNumberWithSuffix(
     data.unlimitedNftTotalSupply
   )} ($${formatNumberWithSuffix(calcs.nftTotalSupplyValue)})</b>
 <i>Value:</i> <b>${formatNumberWithSuffix(
     data.unlimitedNftMinterDeposited
-  )} BNB ($${formatNumberWithSuffix(calcs.minterDepositedValue)})</b>
+  )} BNB ($${formatNumberWithSuffix(calcs.nftMinterDepositedValue)})</b>
   
 <u>Marketplace</u>
 <i>Price:</i> <b>${data.unlimitedNftMarketplacePrice} BNB ($${numFor2.format(
-    calcs.marketPlaceValue
+    calcs.nftMarketPlaceValue
   )})</b>
 <i>Available:</i> <b>${data.unlimitedNftMarketplaceTotalSupply}</b>
 <i>Market Revenue:</i> <b>${formatNumberWithSuffix(
