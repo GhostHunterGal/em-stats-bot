@@ -12,8 +12,8 @@ export interface BlockchainData {
   elephantWbnbReserves: number[];
   elephantBusdReserves: number[];
   trunkTotalSupply: number;
-  trunkTreasuryBalance: number;
   trunkBusdReserves: number[];
+  trunkWbnbReserves: number[];
   unlimitedNftPrice: number;
   unlimitedNftTotalSupply: number;
   unlimitedNftMinterDeposited: number;
@@ -24,8 +24,6 @@ export interface BlockchainData {
   unlimitedNftMarketplaceTotalSales: number;
   unlimitedNftMarketplaceTotalSupply: number;
   futuresInfo: number[];
-  bufferPoolBusdBalance: number;
-  busdTreasuryBusdBalance: number;
   trumpetInfo: number[];
   bnbReserveBnbBalance: number;
 }
@@ -74,12 +72,11 @@ export const getBlockchainData = async () => {
         functionName: 'totalSupply',
       },
       {
-        ...contracts.trunk,
-        functionName: 'balanceOf',
-        args: [contracts.trunkTreasury.address],
+        ...contracts.trunkBusd,
+        functionName: 'getReserves',
       },
       {
-        ...contracts.trunkBusd,
+        ...contracts.trunkWbnb,
         functionName: 'getReserves',
       },
       {
@@ -126,16 +123,6 @@ export const getBlockchainData = async () => {
         functionName: 'getInfo',
       },
       {
-        ...contracts.busd,
-        functionName: 'balanceOf',
-        args: [contracts.busdBufferPool.address],
-      },
-      {
-        ...contracts.busd,
-        functionName: 'balanceOf',
-        args: [contracts.busdTreasury.address],
-      },
-      {
         ...contracts.trumpet,
         functionName: 'getInfo',
       },
@@ -166,8 +153,10 @@ export const getBlockchainData = async () => {
       index < 1 ? Number(formatUnits(value, 9)) : Number(formatEther(value))
     ),
     trunkTotalSupply: Number(formatEther(results[8].result as bigint)),
-    trunkTreasuryBalance: Number(formatEther(results[9].result as bigint)),
-    trunkBusdReserves: (results[10].result as bigint[]).map((value) =>
+    trunkBusdReserves: (results[9].result as bigint[]).map((value) =>
+      Number(formatEther(value))
+    ),
+    trunkWbnbReserves: (results[10].result as bigint[]).map((value) =>
       Number(formatEther(value))
     ),
     unlimitedNftPrice: Number(formatEther(results[11].result as bigint)),
@@ -190,9 +179,7 @@ export const getBlockchainData = async () => {
     futuresInfo: (results[20].result as bigint[]).map((value, index) =>
       index === 0 || index === 5 ? Number(value) : Number(formatEther(value))
     ),
-    bufferPoolBusdBalance: Number(formatEther(results[21].result as bigint)),
-    busdTreasuryBusdBalance: Number(formatEther(results[22].result as bigint)),
-    trumpetInfo: (results[23].result as bigint[]).map((value, index) =>
+    trumpetInfo: (results[21].result as bigint[]).map((value, index) =>
       index <= 1 ? Number(value) : Number(formatEther(value))
     ),
     bnbReserveBnbBalance: Number(formatEther(bnbReserveBnbBalance)),

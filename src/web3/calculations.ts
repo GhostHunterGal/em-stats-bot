@@ -23,6 +23,10 @@ export interface Calculations {
   trunkBusdReserve1: number;
   trunkBusdPrice: number;
   trunkBusdLiquidity: number;
+  trunkWbnbReserve0: number;
+  trunkWbnbReserve1: number;
+  trunkWbnbPrice: number;
+  trunkWbnbLiquidity: number;
   trumpet1stMint: string;
   trumpetTotalUsers: number;
   trumpetTxs: number;
@@ -118,6 +122,14 @@ export const doCalcs = async (data: BlockchainData) => {
   const trunkBusdPrice = trunkBusdRatio * data.busdPrice;
 
   const trunkBusdLiquidity = trunkBusdReserve1 * data.busdPrice * 2;
+
+  const [trunkWbnbReserve0, trunkWbnbReserve1] = data.trunkWbnbReserves;
+
+  const trunkWbnbRatio = trunkWbnbReserve0 / trunkWbnbReserve1;
+
+  const trunkWbnbPrice = trunkWbnbRatio * data.bnbPrice;
+
+  const trunkWbnbLiquidity = trunkWbnbReserve0 * data.bnbPrice * 2;
 
   // TRUMPET DATA
   const trumpet1stMint = timePassedSince(1677896068);
@@ -249,6 +261,10 @@ export const doCalcs = async (data: BlockchainData) => {
     trunkBusdReserve1: trunkBusdReserve1,
     trunkBusdPrice: trunkBusdPrice,
     trunkBusdLiquidity: trunkBusdLiquidity,
+    trunkWbnbReserve0: trunkWbnbReserve0,
+    trunkWbnbReserve1: trunkWbnbReserve1,
+    trunkWbnbPrice: trunkWbnbPrice,
+    trunkWbnbLiquidity: trunkWbnbLiquidity,
     trumpet1stMint: trumpet1stMint,
     trumpetTotalUsers: trumpetTotalUsers,
     trumpetTxs: trumpetTxs,

@@ -72,6 +72,10 @@ export const contracts = {
     address: '0xf15A72B15fC4CAeD6FaDB1ba7347f6CCD1E0Aede',
     abi: lpAbi,
   },
+  trunkWbnb: {
+    address: '0xc979B1563B7CF99670b0bc80E960E5004aDc2cc6',
+    abi: lpAbi,
+  },
   trunkTreasury: {
     address: '0xaCEf13009D7E5701798a0D2c7cc7E07f6937bfDd',
     abi: [],
