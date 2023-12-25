@@ -29,13 +29,6 @@ export const futuresMsg = (
 <i>Bertha:</i> <b>${formatNumberWithSuffix(
     data.berthaElephantBalance
   )}</b> <b>($${formatNumberWithSuffix(calcs.berthaValue)})</b>
-
-<i>BUSD Buffer Pool:</i> <b>${formatNumberWithSuffix(
-    data.bufferPoolBusdBalance
-  )}</b>
-<i>BUSD Treasury:</i> <b>${formatNumberWithSuffix(
-    data.busdTreasuryBusdBalance
-  )}</b>
   
 <u>Activity</u>
 <i>Deposits:</i> <b>$${formatNumberWithSuffix(calcs.futuresTotalDeposited)}</b>
