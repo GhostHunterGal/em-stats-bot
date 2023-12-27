@@ -28,6 +28,7 @@ export interface BlockchainData {
   trumpetInfo: number[];
   bnbReserveStrategyAvailable: number[];
   aprForwardAvailable: number[];
+  pegSupportTreasuryStrategyAvailable: number[];
   bnbReserveBnbBalance: number;
 }
 
@@ -142,6 +143,10 @@ export const getBlockchainData = async () => {
         ...contracts.AprForward,
         functionName: 'available',
       },
+      {
+        ...contracts.pegSupportTreasuryStrategy,
+        functionName: 'available',
+      },
     ],
   });
 
@@ -204,6 +209,9 @@ export const getBlockchainData = async () => {
     ),
     aprForwardAvailable: (results[24].result as bigint[]).map((value) =>
       Number(formatUnits(value, 9))
+    ),
+    pegSupportTreasuryStrategyAvailable: (results[25].result as bigint[]).map(
+      (value) => Number(formatUnits(value, 9))
     ),
     bnbReserveBnbBalance: Number(formatEther(bnbReserveBnbBalance)),
   };

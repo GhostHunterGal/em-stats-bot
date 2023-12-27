@@ -20,6 +20,9 @@ export const trumpetMsg = (calcs: Calculations): string => {
 <i>TRUNK/TRUMPET:</i> <b>${numFor3.format(
     calcs.trumpetPrice
   )} ($${numFor2.format(calcs.trumpetDollarPrice)})</b>
+<i>Sweep:</i> <b>${formatNumberWithSuffix(
+    calcs.trumpetAvailableSweep
+  )} ($${formatNumberWithSuffix(calcs.trumpetAvailableSweepValue)})</b>
   
 <u>Activity</u>
 <i>Participants:</i> <b>${formatNumberWithSuffix(calcs.trumpetTotalUsers)}</b>

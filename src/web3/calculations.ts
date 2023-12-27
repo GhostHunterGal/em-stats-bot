@@ -36,6 +36,8 @@ export interface Calculations {
   trumpetUnderlyingSupply: number;
   trumpetSupply: number;
   trumpetPrice: number;
+  trumpetAvailableSweep: number;
+  trumpetAvailableSweepValue: number;
   trumpetDollarPrice: number;
   futures1stDeposit: string;
   futuresTotalUsers: number;
@@ -159,6 +161,9 @@ export const doCalcs = async (data: BlockchainData) => {
   ] = data.trumpetInfo;
 
   const trumpetDollarPrice = trumpetPrice * higherTrunkPrice;
+
+  const [trumpetAvailableSweep] = data.pegSupportTreasuryStrategyAvailable;
+  const trumpetAvailableSweepValue = trumpetAvailableSweep * elephantWbnbPrice;
 
   // FUTURES DATA
   const futures1stDeposit = timePassedSince(1674328800);
@@ -324,6 +329,8 @@ export const doCalcs = async (data: BlockchainData) => {
     trumpetSupply: trumpetSupply,
     trumpetPrice: trumpetPrice,
     trumpetDollarPrice: trumpetDollarPrice,
+    trumpetAvailableSweep: trumpetAvailableSweep,
+    trumpetAvailableSweepValue: trumpetAvailableSweepValue,
     futures1stDeposit: futures1stDeposit,
     futuresTotalUsers: futuresTotalUsers,
     futuresTotalDeposited: futuresTotalDeposited,
