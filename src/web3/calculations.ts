@@ -49,6 +49,8 @@ export interface Calculations {
   futuresWithdrawals: number;
   bnbReserveValue: number;
   futuresDailyYield: number;
+  bnbReserveStrategyAvailableSweep: number;
+  bnbReserveStrategyAvailableSweepValue: number;
   nft1stMint: string;
   nftMintValue: number;
   nftTotalSupplyValue: number;
@@ -179,6 +181,10 @@ export const doCalcs = async (data: BlockchainData) => {
   const bnbReserveValue = data.bnbReserveBnbBalance * data.bnbPrice;
 
   const futuresDailyYield = 0.5 * (bnbReserveValue / dailyFuturesLiabilities);
+
+  const [bnbReserveStrategyAvailableSweep] = data.bnbReserveStrategyAvailable;
+  const bnbReserveStrategyAvailableSweepValue =
+    bnbReserveStrategyAvailableSweep * elephantWbnbPrice;
 
   // NFT DATA
   const nft1stMint = timePassedSince(1688522727);
@@ -325,6 +331,9 @@ export const doCalcs = async (data: BlockchainData) => {
     futuresWithdrawals: futuresWithdrawals,
     bnbReserveValue: bnbReserveValue,
     futuresDailyYield: futuresDailyYield,
+    bnbReserveStrategyAvailableSweep: bnbReserveStrategyAvailableSweep,
+    bnbReserveStrategyAvailableSweepValue:
+      bnbReserveStrategyAvailableSweepValue,
     nftMintValue: nftMintValue,
     nft1stMint: nft1stMint,
     nftTotalSupplyValue: nftTotalSupplyValue,

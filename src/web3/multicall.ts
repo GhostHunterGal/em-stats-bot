@@ -26,6 +26,7 @@ export interface BlockchainData {
   unlimitedNftMarketplaceTotalSupply: number;
   futuresInfo: number[];
   trumpetInfo: number[];
+  bnbReserveStrategyAvailable: number[];
   bnbReserveBnbBalance: number;
 }
 
@@ -132,6 +133,10 @@ export const getBlockchainData = async () => {
         ...contracts.trumpet,
         functionName: 'getInfo',
       },
+      {
+        ...contracts.bnbReserveStrategy,
+        functionName: 'available',
+      },
     ],
   });
 
@@ -188,6 +193,9 @@ export const getBlockchainData = async () => {
     ),
     trumpetInfo: (results[22].result as bigint[]).map((value, index) =>
       index <= 1 ? Number(value) : Number(formatEther(value))
+    ),
+    bnbReserveStrategyAvailable: (results[23].result as bigint[]).map((value) =>
+      Number(formatUnits(value, 9))
     ),
     bnbReserveBnbBalance: Number(formatEther(bnbReserveBnbBalance)),
   };

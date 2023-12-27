@@ -28,6 +28,11 @@ export const futuresMsg = (
 <i>BNB Reserve:</i> <b>${formatNumberWithSuffix(
     data.bnbReserveBnbBalance
   )} ($${formatNumberWithSuffix(calcs.bnbReserveValue)})</b>
+<i>Sweep:</i> <b>${formatNumberWithSuffix(
+    calcs.bnbReserveStrategyAvailableSweep
+  )} ($${formatNumberWithSuffix(
+    calcs.bnbReserveStrategyAvailableSweepValue
+  )})</b>
 <i>Bertha:</i> <b>${formatNumberWithSuffix(
     data.berthaElephantBalance
   )}</b> <b>($${formatNumberWithSuffix(calcs.berthaValue)})</b>
