@@ -27,6 +27,7 @@ export interface BlockchainData {
   futuresInfo: number[];
   trumpetInfo: number[];
   bnbReserveStrategyAvailable: number[];
+  aprForwardAvailable: number[];
   bnbReserveBnbBalance: number;
 }
 
@@ -137,6 +138,10 @@ export const getBlockchainData = async () => {
         ...contracts.bnbReserveStrategy,
         functionName: 'available',
       },
+      {
+        ...contracts.AprForward,
+        functionName: 'available',
+      },
     ],
   });
 
@@ -195,6 +200,9 @@ export const getBlockchainData = async () => {
       index <= 1 ? Number(value) : Number(formatEther(value))
     ),
     bnbReserveStrategyAvailable: (results[23].result as bigint[]).map((value) =>
+      Number(formatUnits(value, 9))
+    ),
+    aprForwardAvailable: (results[24].result as bigint[]).map((value) =>
       Number(formatUnits(value, 9))
     ),
     bnbReserveBnbBalance: Number(formatEther(bnbReserveBnbBalance)),

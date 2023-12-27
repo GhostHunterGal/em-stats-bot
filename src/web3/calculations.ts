@@ -56,6 +56,8 @@ export interface Calculations {
   nftTotalSupplyValue: number;
   nftMinterDepositedTotal: number;
   nftMinterDepositedValue: number;
+  nftAvailableSweep: number;
+  nftAvailableSweepValue: number;
   bertha1Percent: number;
   bertha1PercentHighestValue: number;
   bertha1PercentValue: number;
@@ -219,6 +221,9 @@ export const doCalcs = async (data: BlockchainData) => {
     data.bnbPrice *
     data.unlimitedNftPrice;
 
+  const [nftAvailableSweep] = data.aprForwardAvailable;
+  const nftAvailableSweepValue = nftAvailableSweep * elephantWbnbPrice;
+
   // STRESS TEST DATA
   const [wbnbK, busdK] = [
     elephantWbnbReserve0 * elephantWbnbReserve1,
@@ -339,6 +344,8 @@ export const doCalcs = async (data: BlockchainData) => {
     nftTotalSupplyValue: nftTotalSupplyValue,
     nftMinterDepositedTotal: nftMinterDepositedTotal,
     nftMinterDepositedValue: nftMinterDepositedValue,
+    nftAvailableSweep: nftAvailableSweep,
+    nftAvailableSweepValue: nftAvailableSweepValue,
     bertha1Percent: bertha1Percent,
     bertha1PercentHighestValue: bertha1PercentHighestValue,
     bertha1PercentValue: bertha1PercentValue,

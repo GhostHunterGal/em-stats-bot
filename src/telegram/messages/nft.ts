@@ -60,6 +60,9 @@ export const nftMsg = (data: BlockchainData, calcs: Calculations): string => {
 <i>Rewards:</i> <b>${formatNumberWithSuffix(
     data.unlimitedNftStakingTotalRewards
   )}</b> <b>($${formatNumberWithSuffix(calcs.nftStakingRewardsValue)})</b>
+<i>Sweep:</i> <b>${formatNumberWithSuffix(
+    calcs.nftAvailableSweep
+  )} ($${formatNumberWithSuffix(calcs.nftAvailableSweepValue)})</b>
 <i>1%(Bertha):</i> <b>${formatNumberWithSuffix(
     calcs.bertha1Percent
   )}</b> <b>($${formatNumberWithSuffix(calcs.bertha1PercentValue)})</b>

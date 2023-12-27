@@ -128,4 +128,8 @@ export const contracts = {
     address: '0xcccc27bAFb2008F800c918aB2cd260A3b051b43C',
     abi: parseAbi(['function available() view returns (uint256, uint256)']),
   },
+  AprForward: {
+    address: '0x01FB3809de463d114B66d7E428035196CD6AE484',
+    abi: parseAbi(['function available() view returns (uint256, uint256)']),
+  },
 } as const;
