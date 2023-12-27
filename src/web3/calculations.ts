@@ -52,6 +52,7 @@ export interface Calculations {
   nft1stMint: string;
   nftMintValue: number;
   nftTotalSupplyValue: number;
+  nftMinterDepositedTotal: number;
   nftMinterDepositedValue: number;
   bertha1Percent: number;
   bertha1PercentHighestValue: number;
@@ -192,8 +193,17 @@ export const doCalcs = async (data: BlockchainData) => {
   const nftStakingRewardsValue =
     data.unlimitedNftStakingTotalRewards * higherElephantPrice;
 
-  const nftMinterDepositedValue =
-    data.unlimitedNftMinterDeposited * data.bnbPrice;
+  const nftMinterDepositedDa38Amount = 14_142; //0x811d1b27A18383B7421bDdE1cb81c55609f1Da38
+  const nftMinterDepositedD875Amount = 358; //0x825055A405d88cF2A844DB3e3dae6dA53774D875
+  const nftMinterDepositedBACDAmount = 496; //0xB3A23fCDB4165e1BBeF5263546e653B58c8fBACD
+
+  const nftMinterDepositedTotal =
+    data.unlimitedNftMinterDeposited +
+    nftMinterDepositedDa38Amount +
+    nftMinterDepositedD875Amount +
+    nftMinterDepositedBACDAmount;
+
+  const nftMinterDepositedValue = nftMinterDepositedTotal * data.bnbPrice;
 
   const nftTotalSupplyValue =
     data.unlimitedNftTotalSupply * data.bnbPrice * data.unlimitedNftPrice;
@@ -318,6 +328,7 @@ export const doCalcs = async (data: BlockchainData) => {
     nftMintValue: nftMintValue,
     nft1stMint: nft1stMint,
     nftTotalSupplyValue: nftTotalSupplyValue,
+    nftMinterDepositedTotal: nftMinterDepositedTotal,
     nftMinterDepositedValue: nftMinterDepositedValue,
     bertha1Percent: bertha1Percent,
     bertha1PercentHighestValue: bertha1PercentHighestValue,

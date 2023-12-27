@@ -14,6 +14,7 @@ export interface BlockchainData {
   trunkTotalSupply: number;
   trunkBusdReserves: number[];
   trunkWbnbReserves: number[];
+  trunkBurnBalance: number;
   unlimitedNftPrice: number;
   unlimitedNftTotalSupply: number;
   unlimitedNftMinterDeposited: number;
@@ -78,6 +79,11 @@ export const getBlockchainData = async () => {
       {
         ...contracts.trunkWbnb,
         functionName: 'getReserves',
+      },
+      {
+        ...contracts.trunk,
+        functionName: 'balanceOf',
+        args: [contracts.trunkBurnWallet.address],
       },
       {
         ...contracts.unlimitedNft,
@@ -159,27 +165,28 @@ export const getBlockchainData = async () => {
     trunkWbnbReserves: (results[10].result as bigint[]).map((value) =>
       Number(formatEther(value))
     ),
-    unlimitedNftPrice: Number(formatEther(results[11].result as bigint)),
-    unlimitedNftTotalSupply: Number(results[12].result),
+    trunkBurnBalance: Number(formatEther(results[11].result as bigint)),
+    unlimitedNftPrice: Number(formatEther(results[12].result as bigint)),
+    unlimitedNftTotalSupply: Number(results[13].result),
     unlimitedNftMinterDeposited: Number(
-      formatEther(results[13].result as bigint)
+      formatEther(results[14].result as bigint)
     ),
     unlimitedNftStakingTotalRewards: Number(
-      formatUnits(results[14].result as bigint, 9)
+      formatUnits(results[15].result as bigint, 9)
     ),
-    unlimitedNftStakingTotalSupply: Number(results[15].result),
+    unlimitedNftStakingTotalSupply: Number(results[16].result),
     unlimitedNftMarketplacePrice: Number(
-      formatEther(results[16].result as bigint)
-    ),
-    unlimitedNftMarketplaceTotalRevenue: Number(
       formatEther(results[17].result as bigint)
     ),
-    unlimitedNftMarketplaceTotalSales: Number(results[18].result),
-    unlimitedNftMarketplaceTotalSupply: Number(results[19].result),
-    futuresInfo: (results[20].result as bigint[]).map((value, index) =>
+    unlimitedNftMarketplaceTotalRevenue: Number(
+      formatEther(results[18].result as bigint)
+    ),
+    unlimitedNftMarketplaceTotalSales: Number(results[19].result),
+    unlimitedNftMarketplaceTotalSupply: Number(results[20].result),
+    futuresInfo: (results[21].result as bigint[]).map((value, index) =>
       index === 0 || index === 5 ? Number(value) : Number(formatEther(value))
     ),
-    trumpetInfo: (results[21].result as bigint[]).map((value, index) =>
+    trumpetInfo: (results[22].result as bigint[]).map((value, index) =>
       index <= 1 ? Number(value) : Number(formatEther(value))
     ),
     bnbReserveBnbBalance: Number(formatEther(bnbReserveBnbBalance)),

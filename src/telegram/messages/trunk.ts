@@ -15,6 +15,7 @@ export const trunkMsg = (data: BlockchainData, calcs: Calculations): string => {
 <i>TRUNK Total Supply:</i> <b>${formatNumberWithSuffix(
     data.trunkTotalSupply
   )}</b>
+<i>TRUNK Burned:</i> <b>${formatNumberWithSuffix(data.trunkBurnBalance)}</b>
 <i>Bertha:</i> <b>${formatNumberWithSuffix(
     data.berthaElephantBalance
   )}</b> <b>($${formatNumberWithSuffix(calcs.berthaValue)})</b>

@@ -80,17 +80,9 @@ export const contracts = {
     address: '0xaCEf13009D7E5701798a0D2c7cc7E07f6937bfDd',
     abi: [],
   },
-  redeemData: {
-    address: '0x7C7990F9049a079d19e31B65Df2A3FCF385A5569',
-    abi: parseAbi([
-      'function totalRedeemed() view returns (uint256)',
-      'function length() view returns (uint256)',
-      'function currentRedemptions() view returns (uint256)',
-    ]),
-  },
-  redemptionSupportStrategy: {
-    address: '0x16c1bC94205f962bb9fa1B4a1110FAF7c451C8BC',
-    abi: parseAbi(['function available() view returns (uint256, uint256)']),
+  trunkBurnWallet: {
+    address: '0x0000000000000000000000000000000000000001',
+    abi: [],
   },
   trumpet: {
     address: '0x574a691D05EeE825299024b2dE584B208647e073',
@@ -109,7 +101,7 @@ export const contracts = {
     abi: nftAbi,
   },
   unlimitedNftMinter: {
-    address: '0x811d1b27A18383B7421bDdE1cb81c55609f1Da38',
+    address: '0x29A8336a58E9B65b5bBC6F626B5B855CdaA45c06',
     abi: parseAbi(['function deposited() view returns (uint256)']),
   },
   unlimitedNftStaking: {
