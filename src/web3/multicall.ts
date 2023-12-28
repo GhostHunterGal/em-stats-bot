@@ -1,6 +1,6 @@
 import { client } from './client';
 import { contracts, erc20Abi } from './contracts';
-import { formatEther, formatUnits } from 'viem';
+import { formatEther, formatUnits, parseEther } from 'viem';
 
 export interface BlockchainData {
   bnbPrice: number;
@@ -25,6 +25,7 @@ export interface BlockchainData {
   unlimitedNftMarketplaceTotalSales: number;
   unlimitedNftMarketplaceTotalSupply: number;
   futuresInfo: number[];
+  futuresDailyYield: number;
   trumpetInfo: number[];
   bnbReserveStrategyAvailable: number[];
   aprForwardAvailable: number[];
@@ -132,6 +133,11 @@ export const getBlockchainData = async () => {
         functionName: 'getInfo',
       },
       {
+        ...contracts.futures,
+        functionName: 'scaleByPeg',
+        args: [parseEther('0.5')],
+      },
+      {
         ...contracts.trumpet,
         functionName: 'getInfo',
       },
@@ -201,16 +207,17 @@ export const getBlockchainData = async () => {
     futuresInfo: (results[21].result as bigint[]).map((value, index) =>
       index === 0 || index === 5 ? Number(value) : Number(formatEther(value))
     ),
-    trumpetInfo: (results[22].result as bigint[]).map((value, index) =>
+    futuresDailyYield: Number(formatEther(results[22].result as bigint)),
+    trumpetInfo: (results[23].result as bigint[]).map((value, index) =>
       index <= 1 ? Number(value) : Number(formatEther(value))
     ),
-    bnbReserveStrategyAvailable: (results[23].result as bigint[]).map((value) =>
+    bnbReserveStrategyAvailable: (results[24].result as bigint[]).map((value) =>
       Number(formatUnits(value, 9))
     ),
-    aprForwardAvailable: (results[24].result as bigint[]).map((value) =>
+    aprForwardAvailable: (results[25].result as bigint[]).map((value) =>
       Number(formatUnits(value, 9))
     ),
-    pegSupportTreasuryStrategyAvailable: (results[25].result as bigint[]).map(
+    pegSupportTreasuryStrategyAvailable: (results[26].result as bigint[]).map(
       (value) => Number(formatUnits(value, 9))
     ),
     bnbReserveBnbBalance: Number(formatEther(bnbReserveBnbBalance)),

@@ -50,7 +50,6 @@ export interface Calculations {
   dailyFuturesLiabilitiesAsPercentage: number;
   futuresWithdrawals: number;
   bnbReserveValue: number;
-  futuresDailyYield: number;
   bnbReserveStrategyAvailableSweep: number;
   bnbReserveStrategyAvailableSweepValue: number;
   nft1stMint: string;
@@ -186,8 +185,6 @@ export const doCalcs = async (data: BlockchainData) => {
     (dailyFuturesLiabilities / berthaValue) * 100;
 
   const bnbReserveValue = data.bnbReserveBnbBalance * data.bnbPrice;
-
-  const futuresDailyYield = 0.5 * (bnbReserveValue / dailyFuturesLiabilities);
 
   const [bnbReserveStrategyAvailableSweep] = data.bnbReserveStrategyAvailable;
   const bnbReserveStrategyAvailableSweepValue =
@@ -342,7 +339,6 @@ export const doCalcs = async (data: BlockchainData) => {
     dailyFuturesLiabilitiesAsPercentage: dailyFuturesLiabilitiesAsPercentage,
     futuresWithdrawals: futuresWithdrawals,
     bnbReserveValue: bnbReserveValue,
-    futuresDailyYield: futuresDailyYield,
     bnbReserveStrategyAvailableSweep: bnbReserveStrategyAvailableSweep,
     bnbReserveStrategyAvailableSweepValue:
       bnbReserveStrategyAvailableSweepValue,
