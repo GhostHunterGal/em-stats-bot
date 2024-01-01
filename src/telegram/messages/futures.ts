@@ -13,11 +13,10 @@ export const futuresMsg = (
   
 <u>Liabilities</u>
 <i>TVL:</i> <b>$${formatNumberWithSuffix(calcs.futuresCurrentBalance)}</b>
-<i>Daily:</i> <b>$${formatNumberWithSuffix(
-    calcs.dailyFuturesLiabilities
-  )} (${numFor2.format(
+<i>Daily:</i> <b>$${formatNumberWithSuffix(calcs.dailyFuturesLiabilities)}</b>
+<i>BNB Reserve/Daily:</i> <b>${numFor2.format(
     calcs.dailyFuturesLiabilitiesVsBnbReserve
-  )}% of BNB Reserve)</b>
+  )}%</b>
 <i>Daily Yield:</i> <b>${numFor3
     .format(data.futuresDailyYield)
     .replace('0.500', '0.5')}%</b>

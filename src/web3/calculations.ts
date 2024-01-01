@@ -191,7 +191,7 @@ export const doCalcs = async (data: BlockchainData) => {
     bnbReserveStrategyAvailableSweep * elephantWbnbPrice;
 
   const dailyFuturesLiabilitiesVsBnbReserve =
-    (dailyFuturesLiabilities / bnbReserveValue) * 100;
+    (bnbReserveValue / dailyFuturesLiabilities) * 100;
 
   // NFT DATA
   const nft1stMint = timePassedSince(1688522727);
