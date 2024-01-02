@@ -177,7 +177,9 @@ export const doCalcs = async (data: BlockchainData) => {
     futuresCurrentBalance,
   ] = data.futuresInfo;
 
-  const dailyFuturesLiabilities = 0.005 * futuresCurrentBalance;
+  const dailyFuturesLiabilities =
+    (data.futuresDailyYield / 100) * futuresCurrentBalance;
+
   const futuresWithdrawals =
     futuresTotalClaimed - futuresTotalCompoundDeposited;
 
