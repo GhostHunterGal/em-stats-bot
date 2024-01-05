@@ -103,7 +103,10 @@ export const contracts = {
   },
   unlimitedNftMinter: {
     address: '0x29A8336a58E9B65b5bBC6F626B5B855CdaA45c06',
-    abi: parseAbi(['function deposited() view returns (uint256)']),
+    abi: parseAbi([
+      'function deposited() view returns (uint256)',
+      'function busd_value_deposited() view returns (uint256)',
+    ]),
   },
   unlimitedNftStaking: {
     address: '0xB2b1D88AA427C2E1849e6D9Ab2169d57f91C4Fb3',

@@ -56,7 +56,7 @@ export interface Calculations {
   nftMintValue: number;
   nftTotalSupplyValue: number;
   nftMinterDepositedTotal: number;
-  nftMinterDepositedValue: number;
+  nftMinterBusdDepositedTotal: number;
   nftAvailableSweep: number;
   nftAvailableSweepValue: number;
   bertha1Percent: number;
@@ -207,17 +207,21 @@ export const doCalcs = async (data: BlockchainData) => {
   const nftStakingRewardsValue =
     data.unlimitedNftStakingTotalRewards * higherElephantPrice;
 
-  const nftMinterDepositedDa38Amount = 14_142; //0x811d1b27A18383B7421bDdE1cb81c55609f1Da38
-  const nftMinterDepositedD875Amount = 358; //0x825055A405d88cF2A844DB3e3dae6dA53774D875
-  const nftMinterDepositedBACDAmount = 496; //0xB3A23fCDB4165e1BBeF5263546e653B58c8fBACD
+  const roun1Mints = 9000;
+  const roun2Mints = 5_432;
 
   const nftMinterDepositedTotal =
-    data.unlimitedNftMinterDeposited +
-    nftMinterDepositedDa38Amount +
-    nftMinterDepositedD875Amount +
-    nftMinterDepositedBACDAmount;
+    data.unlimitedNftMinterDeposited + roun1Mints + roun2Mints;
 
-  const nftMinterDepositedValue = nftMinterDepositedTotal * data.bnbPrice;
+  const nftMinterBusdDepositedDa38 = 3_281_444.207375890194271921; //0x811d1b27A18383B7421bDdE1cb81c55609f1Da38
+  const nftMinterBusdDepositedD875 = 94_807.57082782; //0x825055A405d88cF2A844DB3e3dae6dA53774D875
+  const nftMinterBusdDepositedBACD = 128_748.13913694; //0xB3A23fCDB4165e1BBeF5263546e653B58c8fBACD
+
+  const nftMinterBusdDepositedTotal =
+    data.unlimitedNftMinterBusdDeposited +
+    nftMinterBusdDepositedDa38 +
+    nftMinterBusdDepositedD875 +
+    nftMinterBusdDepositedBACD;
 
   const nftTotalSupplyValue =
     data.unlimitedNftTotalSupply * data.bnbPrice * data.unlimitedNftPrice;
@@ -350,7 +354,7 @@ export const doCalcs = async (data: BlockchainData) => {
     nft1stMint: nft1stMint,
     nftTotalSupplyValue: nftTotalSupplyValue,
     nftMinterDepositedTotal: nftMinterDepositedTotal,
-    nftMinterDepositedValue: nftMinterDepositedValue,
+    nftMinterBusdDepositedTotal: nftMinterBusdDepositedTotal,
     nftAvailableSweep: nftAvailableSweep,
     nftAvailableSweepValue: nftAvailableSweepValue,
     bertha1Percent: bertha1Percent,

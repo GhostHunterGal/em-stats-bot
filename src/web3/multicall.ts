@@ -18,6 +18,7 @@ export interface BlockchainData {
   unlimitedNftPrice: number;
   unlimitedNftTotalSupply: number;
   unlimitedNftMinterDeposited: number;
+  unlimitedNftMinterBusdDeposited: number;
   unlimitedNftStakingTotalRewards: number;
   unlimitedNftStakingTotalSupply: number;
   unlimitedNftMarketplacePrice: number;
@@ -101,6 +102,10 @@ export const getBlockchainData = async () => {
       {
         ...contracts.unlimitedNftMinter,
         functionName: 'deposited',
+      },
+      {
+        ...contracts.unlimitedNftMinter,
+        functionName: 'busd_value_deposited',
       },
       {
         ...contracts.unlimitedNftStaking,
@@ -192,32 +197,35 @@ export const getBlockchainData = async () => {
     unlimitedNftMinterDeposited: Number(
       formatEther(results[14].result as bigint)
     ),
+    unlimitedNftMinterBusdDeposited: Number(
+      formatEther(results[15].result as bigint)
+    ),
     unlimitedNftStakingTotalRewards: Number(
-      formatUnits(results[15].result as bigint, 9)
+      formatUnits(results[16].result as bigint, 9)
     ),
-    unlimitedNftStakingTotalSupply: Number(results[16].result),
+    unlimitedNftStakingTotalSupply: Number(results[17].result),
     unlimitedNftMarketplacePrice: Number(
-      formatEther(results[17].result as bigint)
-    ),
-    unlimitedNftMarketplaceTotalRevenue: Number(
       formatEther(results[18].result as bigint)
     ),
-    unlimitedNftMarketplaceTotalSales: Number(results[19].result),
-    unlimitedNftMarketplaceTotalSupply: Number(results[20].result),
-    futuresInfo: (results[21].result as bigint[]).map((value, index) =>
+    unlimitedNftMarketplaceTotalRevenue: Number(
+      formatEther(results[19].result as bigint)
+    ),
+    unlimitedNftMarketplaceTotalSales: Number(results[20].result),
+    unlimitedNftMarketplaceTotalSupply: Number(results[21].result),
+    futuresInfo: (results[22].result as bigint[]).map((value, index) =>
       index === 0 || index === 5 ? Number(value) : Number(formatEther(value))
     ),
-    futuresDailyYield: Number(formatEther(results[22].result as bigint)),
-    trumpetInfo: (results[23].result as bigint[]).map((value, index) =>
+    futuresDailyYield: Number(formatEther(results[23].result as bigint)),
+    trumpetInfo: (results[24].result as bigint[]).map((value, index) =>
       index <= 1 ? Number(value) : Number(formatEther(value))
     ),
-    bnbReserveStrategyAvailable: (results[24].result as bigint[]).map((value) =>
+    bnbReserveStrategyAvailable: (results[25].result as bigint[]).map((value) =>
       Number(formatUnits(value, 9))
     ),
-    aprForwardAvailable: (results[25].result as bigint[]).map((value) =>
+    aprForwardAvailable: (results[26].result as bigint[]).map((value) =>
       Number(formatUnits(value, 9))
     ),
-    pegSupportTreasuryStrategyAvailable: (results[26].result as bigint[]).map(
+    pegSupportTreasuryStrategyAvailable: (results[27].result as bigint[]).map(
       (value) => Number(formatUnits(value, 9))
     ),
     bnbReserveBnbBalance: Number(formatEther(bnbReserveBnbBalance)),
