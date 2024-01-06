@@ -10,6 +10,8 @@ export const futuresMsg = (
 <b><a href="https://elephant.money/futures.html">🪙 FUTURES 🪙</a></b>
   
 <i>1st Deposit:</i> <b>${calcs.futures1stDeposit}</b>
+
+<i>BNB Price:</i> <b>$${numFor2.format(data.bnbPrice)}</b>
   
 <u>Liabilities</u>
 <i>TVL:</i> <b>$${formatNumberWithSuffix(calcs.futuresCurrentBalance)}</b>
