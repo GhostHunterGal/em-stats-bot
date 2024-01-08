@@ -30,6 +30,7 @@ export interface Calculations {
   trunkMarketCap: number;
   totalTrunkLiquidity: number;
   higherTrunkPrice: number;
+  circulatingTrunkSupply: number;
   trumpet1stMint: string;
   trumpetTotalUsers: number;
   trumpetTxs: number;
@@ -147,6 +148,7 @@ export const doCalcs = async (data: BlockchainData) => {
   const higherTrunkPrice = Math.max(trunkWbnbPrice, trunkBusdPrice);
   const trunkMarketCap = higherTrunkPrice * data.trunkTotalSupply;
   const totalTrunkLiquidity = trunkWbnbLiquidity + trunkBusdLiquidity;
+  const circulatingTrunkSupply = data.trunkTotalSupply - data.trunkBurnBalance;
 
   // TRUMPET DATA
   const trumpet1stMint = timePassedSince(1677896068);
@@ -327,6 +329,7 @@ export const doCalcs = async (data: BlockchainData) => {
     trunkMarketCap: trunkMarketCap,
     totalTrunkLiquidity: totalTrunkLiquidity,
     higherTrunkPrice: higherTrunkPrice,
+    circulatingTrunkSupply: circulatingTrunkSupply,
     trumpet1stMint: trumpet1stMint,
     trumpetTotalUsers: trumpetTotalUsers,
     trumpetTxs: trumpetTxs,
