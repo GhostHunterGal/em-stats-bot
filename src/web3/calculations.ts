@@ -44,7 +44,6 @@ export interface Calculations {
   futuresTotalUsers: number;
   futuresTotalDeposited: number;
   futuresTotalCompoundDeposited: number;
-  futuresTotalRewards: number;
   futuresTotalTxs: number;
   futuresCurrentBalance: number;
   dailyFuturesLiabilities: number;
@@ -78,6 +77,13 @@ export interface Calculations {
   busdLpElephantAfterMassSell: number;
   newElephantWbnbPrice: number;
   newElephantBusdPrice: number;
+  futuresTotalDeposited24HourDifference: number;
+  futuresTotalCompoundDeposited24HourDifference: number;
+  futuresWithdrawals24HourDifference: number;
+  futuresTotalUsers24HourDifference: number;
+  futuresTotalTxs24HourDifference: number;
+  trumpetTotalUsers24HourDifference: number;
+  trumpetTxs24HourDifference: number;
 }
 
 export const doCalcs = async (data: BlockchainData) => {
@@ -166,6 +172,19 @@ export const doCalcs = async (data: BlockchainData) => {
   const [trumpetAvailableSweep] = data.pegSupportTreasuryStrategyAvailable;
   const trumpetAvailableSweepValue = trumpetAvailableSweep * elephantWbnbPrice;
 
+  const [
+    trumpetTotalUsers24HoursAgo,
+    trumpetTxs24HoursAgo,
+    trumpetUnderlyingSupply24HoursAgo,
+    trumpetSupply24HoursAgo,
+    trumpetPrice24HoursAgo,
+  ] = data.trumpetInfo24HoursAgo;
+
+  const [trumpetTotalUsers24HourDifference, trumpetTxs24HourDifference] = [
+    trumpetTotalUsers - trumpetTotalUsers24HoursAgo,
+    trumpetTxs - trumpetTxs24HoursAgo,
+  ];
+
   // FUTURES DATA
   const futures1stDeposit = timePassedSince(1674328800);
 
@@ -184,9 +203,6 @@ export const doCalcs = async (data: BlockchainData) => {
   const futuresWithdrawals =
     futuresTotalClaimed - futuresTotalCompoundDeposited;
 
-  // const dailyFuturesLiabilitiesVsBertha =
-  //   (dailyFuturesLiabilities / berthaValue) * 100;
-
   const bnbReserveValue = data.bnbReserveBnbBalance * data.bnbPrice;
 
   const [bnbReserveStrategyAvailableSweep] = data.bnbReserveStrategyAvailable;
@@ -195,6 +211,33 @@ export const doCalcs = async (data: BlockchainData) => {
 
   const dailyFuturesLiabilitiesVsBnbReserve =
     (bnbReserveValue / dailyFuturesLiabilities) * 100;
+
+  const [
+    futuresTotalUsers24HoursAgo,
+    futuresTotalDeposited24HoursAgo,
+    futuresTotalCompoundDeposited24HoursAgo,
+    futuresTotalClaimed24HoursAgo,
+    futuresTotalRewards24HoursAgo,
+    futuresTotalTxs24HoursAgo,
+    futuresCurrentBalance24HoursAgo,
+  ] = data.futuresInfo24HoursAgo;
+
+  const futuresWithdrawals24HoursAgo =
+    futuresTotalClaimed24HoursAgo - futuresTotalCompoundDeposited24HoursAgo;
+
+  const [
+    futuresTotalUsers24HourDifference,
+    futuresTotalDeposited24HourDifference,
+    futuresTotalCompoundDeposited24HourDifference,
+    futuresWithdrawals24HourDifference,
+    futuresTotalTxs24HourDifference,
+  ] = [
+    futuresTotalUsers - futuresTotalUsers24HoursAgo,
+    futuresTotalDeposited - futuresTotalDeposited24HoursAgo,
+    futuresTotalCompoundDeposited - futuresTotalCompoundDeposited24HoursAgo,
+    futuresWithdrawals - futuresWithdrawals24HoursAgo,
+    futuresTotalTxs - futuresTotalTxs24HoursAgo,
+  ];
 
   // NFT DATA
   const nft1stMint = timePassedSince(1688522727);
@@ -343,7 +386,6 @@ export const doCalcs = async (data: BlockchainData) => {
     futuresTotalUsers: futuresTotalUsers,
     futuresTotalDeposited: futuresTotalDeposited,
     futuresTotalCompoundDeposited: futuresTotalCompoundDeposited,
-    futuresTotalRewards: futuresTotalRewards,
     futuresTotalTxs: futuresTotalTxs,
     futuresCurrentBalance: futuresCurrentBalance,
     dailyFuturesLiabilities: dailyFuturesLiabilities,
@@ -378,5 +420,14 @@ export const doCalcs = async (data: BlockchainData) => {
     busdLpElephantAfterMassSell: busdLpElephantAfterMassSell,
     newElephantWbnbPrice: newElephantWbnbPrice,
     newElephantBusdPrice: newElephantBusdPrice,
+    futuresTotalDeposited24HourDifference:
+      futuresTotalDeposited24HourDifference,
+    futuresTotalCompoundDeposited24HourDifference:
+      futuresTotalCompoundDeposited24HourDifference,
+    futuresWithdrawals24HourDifference: futuresWithdrawals24HourDifference,
+    futuresTotalUsers24HourDifference: futuresTotalUsers24HourDifference,
+    futuresTotalTxs24HourDifference: futuresTotalTxs24HourDifference,
+    trumpetTotalUsers24HourDifference: trumpetTotalUsers24HourDifference,
+    trumpetTxs24HourDifference: trumpetTxs24HourDifference,
   };
 };

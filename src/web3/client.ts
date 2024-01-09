@@ -12,3 +12,11 @@ export const client = createPublicClient({
   chain: bsc,
   transport: fallback([chainStack, ankr]),
 });
+
+export const archiveClient = createPublicClient({
+  batch: {
+    multicall: true,
+  },
+  chain: bsc,
+  transport: fallback([ankr]),
+});

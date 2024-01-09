@@ -24,9 +24,19 @@ export const trumpetMsg = (calcs: Calculations): string => {
     calcs.trumpetAvailableSweep
   )} ($${formatNumberWithSuffix(calcs.trumpetAvailableSweepValue)})</b>
   
-<u>Activity</u>
-<i>Participants:</i> <b>${formatNumberWithSuffix(calcs.trumpetTotalUsers)}</b>
-<i>Transactions:</i> <b>${formatNumberWithSuffix(calcs.trumpetTxs)}</b>
+<u>Activity [Past 24Hrs]</u>
+<i>Participants:</i> <b>${formatNumberWithSuffix(
+    calcs.trumpetTotalUsers
+  )} [${formatNumberWithSuffix(calcs.trumpetTotalUsers24HourDifference).replace(
+    '.000',
+    ''
+  )}]</b>
+<i>Transactions:</i> <b>${formatNumberWithSuffix(
+    calcs.trumpetTxs
+  )} [${formatNumberWithSuffix(calcs.trumpetTxs24HourDifference).replace(
+    '.000',
+    ''
+  )}]</b>
 `;
 
   return msg;

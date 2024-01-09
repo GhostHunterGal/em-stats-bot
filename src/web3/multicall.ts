@@ -1,5 +1,6 @@
-import { client } from './client';
+import { archiveClient, client } from './client';
 import { contracts, erc20Abi } from './contracts';
+import { getBlockNumber24HoursAgo } from '../utils/misc';
 import { formatEther, formatUnits, parseEther } from 'viem';
 
 export interface BlockchainData {
@@ -32,9 +33,13 @@ export interface BlockchainData {
   aprForwardAvailable: number[];
   pegSupportTreasuryStrategyAvailable: number[];
   bnbReserveBnbBalance: number;
+  futuresInfo24HoursAgo: number[];
+  trumpetInfo24HoursAgo: number[];
 }
 
 export const getBlockchainData = async () => {
+  const blockNumber = await client.getBlockNumber();
+  console.log(blockNumber);
   const results = await client.multicall({
     contracts: [
       {
@@ -159,10 +164,32 @@ export const getBlockchainData = async () => {
         functionName: 'available',
       },
     ],
+    blockNumber: blockNumber,
   });
 
   const bnbReserveBnbBalance = await client.getBalance({
     address: contracts.bnbReserve.address,
+    blockNumber: blockNumber,
+  });
+
+  const blockNumber24HoursAgo = await getBlockNumber24HoursAgo(
+    blockNumber,
+    client
+  );
+  console.log(blockNumber24HoursAgo);
+
+  const results24HoursAgo = await archiveClient.multicall({
+    contracts: [
+      {
+        ...contracts.futures,
+        functionName: 'getInfo',
+      },
+      {
+        ...contracts.trumpet,
+        functionName: 'getInfo',
+      },
+    ],
+    blockNumber: blockNumber24HoursAgo,
   });
 
   const data = {
@@ -229,6 +256,16 @@ export const getBlockchainData = async () => {
       (value) => Number(formatUnits(value, 9))
     ),
     bnbReserveBnbBalance: Number(formatEther(bnbReserveBnbBalance)),
+    futuresInfo24HoursAgo: (
+      results24HoursAgo[0].result as unknown as bigint[]
+    ).map((value, index) =>
+      index === 0 || index === 5 ? Number(value) : Number(formatEther(value))
+    ),
+    trumpetInfo24HoursAgo: (
+      results24HoursAgo[1].result as unknown as bigint[]
+    ).map((value, index) =>
+      index <= 1 ? Number(value) : Number(formatEther(value))
+    ),
   };
 
   return data;

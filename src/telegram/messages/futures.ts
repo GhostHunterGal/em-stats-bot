@@ -36,15 +36,34 @@ export const futuresMsg = (
     data.berthaElephantBalance
   )}</b> <b>($${formatNumberWithSuffix(calcs.berthaValue)})</b>
   
-<u>Activity</u>
-<i>Deposits:</i> <b>$${formatNumberWithSuffix(calcs.futuresTotalDeposited)}</b>
+<u>Activity [Past 24Hrs]</u>
+<i>Deposits:</i> <b>$${formatNumberWithSuffix(
+    calcs.futuresTotalDeposited
+  )} [$${formatNumberWithSuffix(
+    calcs.futuresTotalDeposited24HourDifference
+  ).replace('.000', '')}]</b>
 <i>Compounds:</i> <b>$${formatNumberWithSuffix(
     calcs.futuresTotalCompoundDeposited
-  )}</b>
-<i>Withdrawals:</i> <b>$${formatNumberWithSuffix(calcs.futuresWithdrawals)}</b>
-<i>Rewards:</i> <b>$${formatNumberWithSuffix(calcs.futuresTotalRewards)}</b>
-<i>Participants:</i> <b>${formatNumberWithSuffix(calcs.futuresTotalUsers)}</b>
-<i>Transactions:</i> <b>${formatNumberWithSuffix(calcs.futuresTotalTxs)}</b>
+  )} [$${formatNumberWithSuffix(
+    calcs.futuresTotalCompoundDeposited24HourDifference
+  ).replace('.000', '')}]</b>
+<i>Withdrawals:</i> <b>$${formatNumberWithSuffix(
+    calcs.futuresWithdrawals
+  )} [$${formatNumberWithSuffix(
+    calcs.futuresWithdrawals24HourDifference
+  ).replace('.000', '')}]</b>
+<i>Participants:</i> <b>${formatNumberWithSuffix(
+    calcs.futuresTotalUsers
+  )} [${formatNumberWithSuffix(calcs.futuresTotalUsers24HourDifference).replace(
+    '.000',
+    ''
+  )}]</b>
+<i>Transactions:</i> <b>${formatNumberWithSuffix(
+    calcs.futuresTotalTxs
+  )} [${formatNumberWithSuffix(calcs.futuresTotalTxs24HourDifference).replace(
+    '.000',
+    ''
+  )}]</b>
 `;
 
   return msg;
