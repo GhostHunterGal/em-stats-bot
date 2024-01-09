@@ -39,7 +39,6 @@ export interface BlockchainData {
 
 export const getBlockchainData = async () => {
   const blockNumber = await client.getBlockNumber();
-  console.log(blockNumber);
   const results = await client.multicall({
     contracts: [
       {
@@ -176,7 +175,6 @@ export const getBlockchainData = async () => {
     blockNumber,
     client
   );
-  console.log(blockNumber24HoursAgo);
 
   const results24HoursAgo = await archiveClient.multicall({
     contracts: [
