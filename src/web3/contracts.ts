@@ -134,7 +134,10 @@ export const contracts = {
   },
   AprForward: {
     address: '0x01FB3809de463d114B66d7E428035196CD6AE484',
-    abi: parseAbi(['function available() view returns (uint256, uint256)']),
+    abi: parseAbi([
+      'function available() view returns (uint256, uint256)',
+      'function dailyEstimate() view returns (uint256, uint256)',
+    ]),
   },
   pegSupportTreasuryStrategy: {
     address: '0xcECba44Ce9EE16948551E85864f3EEf652174587',

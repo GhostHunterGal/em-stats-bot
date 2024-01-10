@@ -21,7 +21,9 @@ export const futuresMsg = (
   )}%</b>
 <i>Daily Yield:</i> <b>${numFor3
     .format(data.futuresDailyYield)
-    .replace('0.500', '0.5')}%</b>
+    .replace('0.500', '0.5')}% (${numFor3.format(
+    data.futuresAnnualYield
+  )}% APR)</b>
   
 <u>Givers of Yield</u>
 <i>BNB Reserve:</i> <b>${formatNumberWithSuffix(

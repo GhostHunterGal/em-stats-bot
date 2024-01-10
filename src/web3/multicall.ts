@@ -2,6 +2,7 @@ import { archiveClient, client } from './client';
 import { contracts, erc20Abi } from './contracts';
 import { getBlockNumber24HoursAgo } from '../utils/misc';
 import { formatEther, formatUnits, parseEther } from 'viem';
+import { format } from 'path';
 
 export interface BlockchainData {
   bnbPrice: number;
@@ -28,9 +29,11 @@ export interface BlockchainData {
   unlimitedNftMarketplaceTotalSupply: number;
   futuresInfo: number[];
   futuresDailyYield: number;
+  futuresAnnualYield: number;
   trumpetInfo: number[];
   bnbReserveStrategyAvailable: number[];
   aprForwardAvailable: number[];
+  aprForwardDailyEstimate: number[];
   pegSupportTreasuryStrategyAvailable: number[];
   bnbReserveBnbBalance: number;
   futuresInfo24HoursAgo: number[];
@@ -147,6 +150,11 @@ export const getBlockchainData = async () => {
         args: [parseEther('0.5')],
       },
       {
+        ...contracts.futures,
+        functionName: 'scaleByPeg',
+        args: [parseEther('182')],
+      },
+      {
         ...contracts.trumpet,
         functionName: 'getInfo',
       },
@@ -157,6 +165,10 @@ export const getBlockchainData = async () => {
       {
         ...contracts.AprForward,
         functionName: 'available',
+      },
+      {
+        ...contracts.AprForward,
+        functionName: 'dailyEstimate',
       },
       {
         ...contracts.pegSupportTreasuryStrategy,
@@ -241,16 +253,20 @@ export const getBlockchainData = async () => {
       index === 0 || index === 5 ? Number(value) : Number(formatEther(value))
     ),
     futuresDailyYield: Number(formatEther(results[23].result as bigint)),
-    trumpetInfo: (results[24].result as bigint[]).map((value, index) =>
+    futuresAnnualYield: Number(formatEther(results[24].result as bigint)),
+    trumpetInfo: (results[25].result as bigint[]).map((value, index) =>
       index <= 1 ? Number(value) : Number(formatEther(value))
     ),
-    bnbReserveStrategyAvailable: (results[25].result as bigint[]).map((value) =>
+    bnbReserveStrategyAvailable: (results[26].result as bigint[]).map((value) =>
       Number(formatUnits(value, 9))
     ),
-    aprForwardAvailable: (results[26].result as bigint[]).map((value) =>
+    aprForwardAvailable: (results[27].result as bigint[]).map((value) =>
       Number(formatUnits(value, 9))
     ),
-    pegSupportTreasuryStrategyAvailable: (results[27].result as bigint[]).map(
+    aprForwardDailyEstimate: (results[28].result as bigint[]).map((value) =>
+      Number(formatEther(value))
+    ),
+    pegSupportTreasuryStrategyAvailable: (results[29].result as bigint[]).map(
       (value) => Number(formatUnits(value, 9))
     ),
     bnbReserveBnbBalance: Number(formatEther(bnbReserveBnbBalance)),

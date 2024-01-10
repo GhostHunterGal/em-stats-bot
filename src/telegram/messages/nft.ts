@@ -53,7 +53,7 @@ export const nftMsg = (data: BlockchainData, calcs: Calculations): string => {
     data.unlimitedNftMarketplaceTotalSales
   ).replace('.000', '')}</b>
   
-<u>Staking</u>
+<u>Staking <b>(~${numFor2.format(calcs.nftStakingApr)}% APR)</b></u>
 <i>Staked:</i> <b>${formatNumberWithSuffix(
     data.unlimitedNftStakingTotalSupply
   )} ($${formatNumberWithSuffix(calcs.nftStakingTotalSupplyValue)})</b>
