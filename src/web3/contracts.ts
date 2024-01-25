@@ -91,7 +91,7 @@ export const contracts = {
     ]),
   },
   futures: {
-    address: '0x9a37fa4Da95a0656dbb026B79b258558e5CEeD56', // 0x5B24f7645eec47EDd997bF8faDF3E340518af11B
+    address: '0xA29004c5D8C2efaE284195d8059131Ee821F3381',
     abi: parseAbi([
       'function getInfo() view returns (uint256, uint256, uint256, uint256, uint256, uint256, uint256)',
       'function scaleByPeg(uint256) view returns (uint256)',

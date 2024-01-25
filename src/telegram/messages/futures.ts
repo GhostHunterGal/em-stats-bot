@@ -19,7 +19,7 @@ export const futuresMsg = (
 <i>BNB Reserve/Daily:</i> <b>${numFor2.format(
     calcs.dailyFuturesLiabilitiesVsBnbReserve
   )}%</b>
-<i>Daily Yield:</i> <b>${numFor3
+<i>Base Yield:</i> <b>${numFor3
     .format(data.futuresDailyYield)
     .replace('0.500', '0.5')}% (${numFor3.format(
     data.futuresAnnualYield
