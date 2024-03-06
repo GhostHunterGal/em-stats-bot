@@ -24,6 +24,9 @@ export const futuresMsg = (
     .replace('0.500', '0.5')}% (${numFor3.format(
     data.futuresAnnualYield
   )}% APR)</b>
+<i>Decay Buffer:</i> <b>${numFor2.format(calcs.decayBufferDays)} day${
+    calcs.decayBufferDays !== 1 ? 's' : ''
+  }</b>
   
 <u>Givers of Yield</u>
 <i>BNB Reserve:</i> <b>${formatNumberWithSuffix(
