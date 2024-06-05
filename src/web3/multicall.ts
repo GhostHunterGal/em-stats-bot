@@ -2,7 +2,6 @@ import { archiveClient, client } from './client';
 import { contracts, erc20Abi } from './contracts';
 import { getBlockNumber24HoursAgo } from '../utils/misc';
 import { formatEther, formatUnits, parseEther } from 'viem';
-import { format } from 'path';
 
 export interface BlockchainData {
   bnbPrice: number;
@@ -35,7 +34,11 @@ export interface BlockchainData {
   aprForwardAvailable: number[];
   aprForwardDailyEstimate: number[];
   pegSupportTreasuryStrategyAvailable: number[];
+  btcTurbineBtcBalance: number;
+  trunkTurbineTrunkBalance: number;
+  btcPrice: number;
   bnbReserveBnbBalance: number;
+  rainyDayFundBnbBalance: number;
   futuresInfo24HoursAgo: number[];
   trumpetInfo24HoursAgo: number[];
 }
@@ -174,12 +177,29 @@ export const getBlockchainData = async () => {
         ...contracts.pegSupportTreasuryStrategy,
         functionName: 'available',
       },
+      {
+        ...contracts.btcTurbine,
+        functionName: 'balanceUnderlying',
+      },
+      {
+        ...contracts.trunkTurbine,
+        functionName: 'balanceUnderlying',
+      },
+      {
+        ...contracts.chainlinkBtc,
+        functionName: 'latestAnswer',
+      },
     ],
     blockNumber: blockNumber,
   });
 
   const bnbReserveBnbBalance = await client.getBalance({
     address: contracts.bnbReserve.address,
+    blockNumber: blockNumber,
+  });
+
+  const rainyDayFundBnbBalance = await client.getBalance({
+    address: contracts.rainyDayFund.address,
     blockNumber: blockNumber,
   });
 
@@ -269,7 +289,11 @@ export const getBlockchainData = async () => {
     pegSupportTreasuryStrategyAvailable: (results[29].result as bigint[]).map(
       (value) => Number(formatUnits(value, 9))
     ),
+    btcTurbineBtcBalance: Number(formatEther(results[30].result as bigint)),
+    trunkTurbineTrunkBalance: Number(formatEther(results[31].result as bigint)),
+    btcPrice: Number(formatUnits(results[32].result as bigint, 8)),
     bnbReserveBnbBalance: Number(formatEther(bnbReserveBnbBalance)),
+    rainyDayFundBnbBalance: Number(formatEther(rainyDayFundBnbBalance)),
     futuresInfo24HoursAgo: (
       results24HoursAgo[0].result as unknown as bigint[]
     ).map((value, index) =>

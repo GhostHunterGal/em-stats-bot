@@ -32,6 +32,10 @@ export const contracts = {
     address: '0xcBb98864Ef56E9042e7d2efef76141f15731B82f',
     abi: chainlinkAbi,
   },
+  chainlinkBtc: {
+    address: '0x264990fbd0A4796A3E3d8E37C4d5F87a3aCa5Ebf',
+    abi: chainlinkAbi,
+  },
   busd: {
     address: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
     abi: erc20Abi,
@@ -91,7 +95,7 @@ export const contracts = {
     ]),
   },
   futures: {
-    address: '0xA29004c5D8C2efaE284195d8059131Ee821F3381',
+    address: '0x778c191EcC493fe03A0a2364cfEa264CB5e38440',
     abi: parseAbi([
       'function getInfo() view returns (uint256, uint256, uint256, uint256, uint256, uint256, uint256)',
       'function scaleByPeg(uint256) view returns (uint256)',
@@ -142,5 +146,17 @@ export const contracts = {
   pegSupportTreasuryStrategy: {
     address: '0xcECba44Ce9EE16948551E85864f3EEf652174587',
     abi: parseAbi(['function available() view returns (uint256, uint256)']),
+  },
+  rainyDayFund: {
+    address: '0xc6a42b74867D1F7049192FfB6d0A9D77696d18bb',
+    abi: [],
+  },
+  btcTurbine: {
+    address: '0x69C714f868855eC3F24dfff0fd5F1805642F2D86',
+    abi: parseAbi(['function balanceUnderlying() view returns (uint256)']),
+  },
+  trunkTurbine: {
+    address: '0x6De7dEe23b27a6ABD1b3a1a4C0C40B128620a51d',
+    abi: parseAbi(['function balanceUnderlying() view returns (uint256)']),
   },
 } as const;

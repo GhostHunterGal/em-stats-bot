@@ -40,6 +40,16 @@ export const futuresMsg = (
 <i>Bertha:</i> <b>${formatNumberWithSuffix(
     data.berthaElephantBalance
   )}</b> <b>($${formatNumberWithSuffix(calcs.berthaValue)})</b>
+<i>RDF:</i> <b>${formatNumberWithSuffix(
+    data.rainyDayFundBnbBalance
+  )} BNB ($${formatNumberWithSuffix(calcs.rainyDayFundValue)})</b>
+
+<i>BTC Turbine:</i> <b>${formatNumberWithSuffix(
+    data.btcTurbineBtcBalance
+  )} ($${formatNumberWithSuffix(calcs.btcTurbineValue)})</b>
+<i>TRUNK Turbine:</i> <b>${formatNumberWithSuffix(
+    data.trunkTurbineTrunkBalance
+  )} ($${formatNumberWithSuffix(calcs.trunkTurbineValue)})</b>
   
 <u>Activity [Past 24Hrs]</u>
 <i>Deposits:</i> <b>$${formatNumberWithSuffix(

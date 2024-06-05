@@ -86,6 +86,9 @@ export interface Calculations {
   futuresTotalTxs24HourDifference: number;
   trumpetTotalUsers24HourDifference: number;
   trumpetTxs24HourDifference: number;
+  rainyDayFundValue: number;
+  btcTurbineValue: number;
+  trunkTurbineValue: number;
 }
 
 export const doCalcs = async (data: BlockchainData) => {
@@ -206,6 +209,10 @@ export const doCalcs = async (data: BlockchainData) => {
     futuresTotalClaimed - futuresTotalCompoundDeposited;
 
   const bnbReserveValue = data.bnbReserveBnbBalance * data.bnbPrice;
+  const rainyDayFundValue = data.rainyDayFundBnbBalance * data.bnbPrice;
+
+  const btcTurbineValue = data.btcTurbineBtcBalance * data.btcPrice;
+  const trunkTurbineValue = data.trunkTurbineTrunkBalance * higherTrunkPrice;
 
   const [bnbReserveStrategyAvailableSweep] = data.bnbReserveStrategyAvailable;
   const bnbReserveStrategyAvailableSweepValue =
@@ -442,5 +449,8 @@ export const doCalcs = async (data: BlockchainData) => {
     futuresTotalTxs24HourDifference: futuresTotalTxs24HourDifference,
     trumpetTotalUsers24HourDifference: trumpetTotalUsers24HourDifference,
     trumpetTxs24HourDifference: trumpetTxs24HourDifference,
+    rainyDayFundValue: rainyDayFundValue,
+    btcTurbineValue: btcTurbineValue,
+    trunkTurbineValue: trunkTurbineValue,
   };
 };
