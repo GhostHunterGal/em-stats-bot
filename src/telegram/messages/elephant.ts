@@ -1,12 +1,12 @@
-import { BlockchainData } from '../../web3/multicall';
-import { elephantTotalSupply } from '../../web3/contracts';
-import { Calculations } from '../../web3/calculations';
+import { BlockchainData } from '../../web3/multicall.js';
+import { elephantTotalSupply } from '../../web3/contracts.js';
+import { Calculations } from '../../web3/calculations.js';
 import {
   numFor9,
   numFor2,
   numFor3,
   formatNumberWithSuffix,
-} from '../../utils/formats';
+} from '../../utils/formats.js';
 
 export const elephantMsg = (
   data: BlockchainData,

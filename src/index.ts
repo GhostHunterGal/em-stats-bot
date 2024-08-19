@@ -1,18 +1,14 @@
-import 'dotenv/config';
-import cron from 'node-cron';
-import { exec } from 'child_process';
+import { sendElephantMoneyMsgs } from './telegram/send-telegram.js';
 
-console.log('Cron job started....');
-
-cron.schedule('*/10 * * * *', () => {
-  exec('node dist/telegram/send-telegram.js', (error, stdout, stderr) => {
-    if (error) {
-      console.error('Error executing send-telegram.js:', error.message);
-      return;
-    }
-    if (stderr) {
-      console.error('Error executing send-telegram.js:', stderr);
-      return;
-    }
-  });
-});
+export const handler = async (event: any) => {
+  try {
+    await sendElephantMoneyMsgs();
+    const response = {
+      statusCode: 200,
+      body: JSON.stringify('Elephant Money Telegram messages sent.'),
+    };
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};

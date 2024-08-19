@@ -1,6 +1,6 @@
-import { BlockchainData } from './multicall';
-import { elephantTotalSupply } from '../web3/contracts';
-import { timePassedSince } from '../utils/misc';
+import { BlockchainData } from './multicall.js';
+import { elephantTotalSupply } from '../web3/contracts.js';
+import { timePassedSince } from '../utils/misc.js';
 
 export interface Calculations {
   elephantStart: string;
@@ -79,22 +79,20 @@ export interface Calculations {
   busdLpElephantAfterMassSell: number;
   newElephantWbnbPrice: number;
   newElephantBusdPrice: number;
-  futuresTotalDeposited24HourDifference: number;
-  futuresTotalCompoundDeposited24HourDifference: number;
-  futuresWithdrawals24HourDifference: number;
-  futuresTotalUsers24HourDifference: number;
-  futuresTotalTxs24HourDifference: number;
-  trumpetTotalUsers24HourDifference: number;
-  trumpetTxs24HourDifference: number;
+  // futuresTotalDeposited24HourDifference: number;
+  // futuresTotalCompoundDeposited24HourDifference: number;
+  // futuresWithdrawals24HourDifference: number;
+  // futuresTotalUsers24HourDifference: number;
+  // futuresTotalTxs24HourDifference: number;
+  // trumpetTotalUsers24HourDifference: number;
+  // trumpetTxs24HourDifference: number;
   rainyDayFundValue: number;
   btcTurbineValue: number;
   trunkTurbineValue: number;
 }
 
 export const doCalcs = async (data: BlockchainData) => {
-  // ELEPHANT DATA
-  // const elephantStart = timePassedSince(1620170041);  // 05/04
-  const elephantStart = timePassedSince(1620774862); // 05/11
+  const elephantStart = timePassedSince(1620774862);
 
   const [elephantWbnbReserve0, elephantWbnbReserve1] =
     data.elephantWbnbReserves;
@@ -137,7 +135,6 @@ export const doCalcs = async (data: BlockchainData) => {
     data.berthaElephantBalance -
     lpElephantBalance;
 
-  // TRUNK DATA
   const trunkStart = timePassedSince(1634606700);
 
   const [trunkBusdReserve0, trunkBusdReserve1] = data.trunkBusdReserves;
@@ -161,7 +158,6 @@ export const doCalcs = async (data: BlockchainData) => {
   const totalTrunkLiquidity = trunkWbnbLiquidity + trunkBusdLiquidity;
   const circulatingTrunkSupply = data.trunkTotalSupply - data.trunkBurnBalance;
 
-  // TRUMPET DATA
   const trumpet1stMint = timePassedSince(1677896068);
 
   const [
@@ -177,20 +173,19 @@ export const doCalcs = async (data: BlockchainData) => {
   const [trumpetAvailableSweep] = data.pegSupportTreasuryStrategyAvailable;
   const trumpetAvailableSweepValue = trumpetAvailableSweep * elephantWbnbPrice;
 
-  const [
-    trumpetTotalUsers24HoursAgo,
-    trumpetTxs24HoursAgo,
-    trumpetUnderlyingSupply24HoursAgo,
-    trumpetSupply24HoursAgo,
-    trumpetPrice24HoursAgo,
-  ] = data.trumpetInfo24HoursAgo;
+  // const [
+  //   trumpetTotalUsers24HoursAgo,
+  //   trumpetTxs24HoursAgo,
+  //   trumpetUnderlyingSupply24HoursAgo,
+  //   trumpetSupply24HoursAgo,
+  //   trumpetPrice24HoursAgo,
+  // ] = data.trumpetInfo24HoursAgo;
 
-  const [trumpetTotalUsers24HourDifference, trumpetTxs24HourDifference] = [
-    trumpetTotalUsers - trumpetTotalUsers24HoursAgo,
-    trumpetTxs - trumpetTxs24HoursAgo,
-  ];
+  // const [trumpetTotalUsers24HourDifference, trumpetTxs24HourDifference] = [
+  //   trumpetTotalUsers - trumpetTotalUsers24HoursAgo,
+  //   trumpetTxs - trumpetTxs24HoursAgo,
+  // ];
 
-  // FUTURES DATA
   const futures1stDeposit = timePassedSince(1674328800);
 
   const [
@@ -225,34 +220,33 @@ export const doCalcs = async (data: BlockchainData) => {
 
   const decayBufferDays = data.futuresDailyYield / decayRate;
 
-  const [
-    futuresTotalUsers24HoursAgo,
-    futuresTotalDeposited24HoursAgo,
-    futuresTotalCompoundDeposited24HoursAgo,
-    futuresTotalClaimed24HoursAgo,
-    futuresTotalRewards24HoursAgo,
-    futuresTotalTxs24HoursAgo,
-    futuresCurrentBalance24HoursAgo,
-  ] = data.futuresInfo24HoursAgo;
+  // const [
+  //   futuresTotalUsers24HoursAgo,
+  //   futuresTotalDeposited24HoursAgo,
+  //   futuresTotalCompoundDeposited24HoursAgo,
+  //   futuresTotalClaimed24HoursAgo,
+  //   futuresTotalRewards24HoursAgo,
+  //   futuresTotalTxs24HoursAgo,
+  //   futuresCurrentBalance24HoursAgo,
+  // ] = data.futuresInfo24HoursAgo;
 
-  const futuresWithdrawals24HoursAgo =
-    futuresTotalClaimed24HoursAgo - futuresTotalCompoundDeposited24HoursAgo;
+  // const futuresWithdrawals24HoursAgo =
+  //   futuresTotalClaimed24HoursAgo - futuresTotalCompoundDeposited24HoursAgo;
 
-  const [
-    futuresTotalUsers24HourDifference,
-    futuresTotalDeposited24HourDifference,
-    futuresTotalCompoundDeposited24HourDifference,
-    futuresWithdrawals24HourDifference,
-    futuresTotalTxs24HourDifference,
-  ] = [
-    futuresTotalUsers - futuresTotalUsers24HoursAgo,
-    futuresTotalDeposited - futuresTotalDeposited24HoursAgo,
-    futuresTotalCompoundDeposited - futuresTotalCompoundDeposited24HoursAgo,
-    futuresWithdrawals - futuresWithdrawals24HoursAgo,
-    futuresTotalTxs - futuresTotalTxs24HoursAgo,
-  ];
+  // const [
+  //   futuresTotalUsers24HourDifference,
+  //   futuresTotalDeposited24HourDifference,
+  //   futuresTotalCompoundDeposited24HourDifference,
+  //   futuresWithdrawals24HourDifference,
+  //   futuresTotalTxs24HourDifference,
+  // ] = [
+  //   futuresTotalUsers - futuresTotalUsers24HoursAgo,
+  //   futuresTotalDeposited - futuresTotalDeposited24HoursAgo,
+  //   futuresTotalCompoundDeposited - futuresTotalCompoundDeposited24HoursAgo,
+  //   futuresWithdrawals - futuresWithdrawals24HoursAgo,
+  //   futuresTotalTxs - futuresTotalTxs24HoursAgo,
+  // ];
 
-  // NFT DATA
   const nft1stMint = timePassedSince(1688522727);
 
   const nftMintValue = data.unlimitedNftPrice * data.bnbPrice;
@@ -271,9 +265,9 @@ export const doCalcs = async (data: BlockchainData) => {
   const nftMinterDepositedTotal =
     data.unlimitedNftMinterDeposited + roun1Mints + roun2Mints;
 
-  const nftMinterBusdDepositedDa38 = 3_281_444.207375890194271921; //0x811d1b27A18383B7421bDdE1cb81c55609f1Da38
-  const nftMinterBusdDepositedD875 = 94_807.57082782; //0x825055A405d88cF2A844DB3e3dae6dA53774D875
-  const nftMinterBusdDepositedBACD = 128_748.13913694; //0xB3A23fCDB4165e1BBeF5263546e653B58c8fBACD
+  const nftMinterBusdDepositedDa38 = 3_281_444.207375890194271921;
+  const nftMinterBusdDepositedD875 = 94_807.57082782;
+  const nftMinterBusdDepositedBACD = 128_748.13913694;
 
   const nftMinterBusdDepositedTotal =
     data.unlimitedNftMinterBusdDeposited +
@@ -297,7 +291,6 @@ export const doCalcs = async (data: BlockchainData) => {
   const nftStakingApr =
     ((nftDailyEstimate * 365) / nftMinterBusdDepositedTotal) * 100;
 
-  // STRESS TEST DATA
   const [wbnbK, busdK] = [
     elephantWbnbReserve0 * elephantWbnbReserve1,
     elephantBusdReserve0 * elephantBusdReserve1,
@@ -440,15 +433,15 @@ export const doCalcs = async (data: BlockchainData) => {
     busdLpElephantAfterMassSell: busdLpElephantAfterMassSell,
     newElephantWbnbPrice: newElephantWbnbPrice,
     newElephantBusdPrice: newElephantBusdPrice,
-    futuresTotalDeposited24HourDifference:
-      futuresTotalDeposited24HourDifference,
-    futuresTotalCompoundDeposited24HourDifference:
-      futuresTotalCompoundDeposited24HourDifference,
-    futuresWithdrawals24HourDifference: futuresWithdrawals24HourDifference,
-    futuresTotalUsers24HourDifference: futuresTotalUsers24HourDifference,
-    futuresTotalTxs24HourDifference: futuresTotalTxs24HourDifference,
-    trumpetTotalUsers24HourDifference: trumpetTotalUsers24HourDifference,
-    trumpetTxs24HourDifference: trumpetTxs24HourDifference,
+    // futuresTotalDeposited24HourDifference:
+    //   futuresTotalDeposited24HourDifference,
+    // futuresTotalCompoundDeposited24HourDifference:
+    //   futuresTotalCompoundDeposited24HourDifference,
+    // futuresWithdrawals24HourDifference: futuresWithdrawals24HourDifference,
+    // futuresTotalUsers24HourDifference: futuresTotalUsers24HourDifference,
+    // futuresTotalTxs24HourDifference: futuresTotalTxs24HourDifference,
+    // trumpetTotalUsers24HourDifference: trumpetTotalUsers24HourDifference,
+    // trumpetTxs24HourDifference: trumpetTxs24HourDifference,
     rainyDayFundValue: rainyDayFundValue,
     btcTurbineValue: btcTurbineValue,
     trunkTurbineValue: trunkTurbineValue,

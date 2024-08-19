@@ -1,6 +1,5 @@
-import { archiveClient, client } from './client';
-import { contracts, erc20Abi } from './contracts';
-import { getBlockNumber24HoursAgo } from '../utils/misc';
+import { client } from './client.js';
+import { contracts, erc20Abi } from './contracts.js';
 import { formatEther, formatUnits, parseEther } from 'viem';
 
 export interface BlockchainData {
@@ -39,8 +38,8 @@ export interface BlockchainData {
   btcPrice: number;
   bnbReserveBnbBalance: number;
   rainyDayFundBnbBalance: number;
-  futuresInfo24HoursAgo: number[];
-  trumpetInfo24HoursAgo: number[];
+  // futuresInfo24HoursAgo: number[];
+  // trumpetInfo24HoursAgo: number[];
 }
 
 export const getBlockchainData = async () => {
@@ -203,24 +202,24 @@ export const getBlockchainData = async () => {
     blockNumber: blockNumber,
   });
 
-  const blockNumber24HoursAgo = await getBlockNumber24HoursAgo(
-    blockNumber,
-    client
-  );
+  // const blockNumber24HoursAgo = await getBlockNumber24HoursAgo(
+  //   blockNumber,
+  //   client
+  // );
 
-  const results24HoursAgo = await archiveClient.multicall({
-    contracts: [
-      {
-        ...contracts.futures,
-        functionName: 'getInfo',
-      },
-      {
-        ...contracts.trumpet,
-        functionName: 'getInfo',
-      },
-    ],
-    blockNumber: blockNumber24HoursAgo,
-  });
+  // const results24HoursAgo = await archiveClient.multicall({
+  //   contracts: [
+  //     {
+  //       ...contracts.futures,
+  //       functionName: 'getInfo',
+  //     },
+  //     {
+  //       ...contracts.trumpet,
+  //       functionName: 'getInfo',
+  //     },
+  //   ],
+  //   blockNumber: blockNumber24HoursAgo,
+  // });
 
   const data = {
     bnbPrice: Number(formatUnits(results[0].result as bigint, 8)),
@@ -294,16 +293,16 @@ export const getBlockchainData = async () => {
     btcPrice: Number(formatUnits(results[32].result as bigint, 8)),
     bnbReserveBnbBalance: Number(formatEther(bnbReserveBnbBalance)),
     rainyDayFundBnbBalance: Number(formatEther(rainyDayFundBnbBalance)),
-    futuresInfo24HoursAgo: (
-      results24HoursAgo[0].result as unknown as bigint[]
-    ).map((value, index) =>
-      index === 0 || index === 5 ? Number(value) : Number(formatEther(value))
-    ),
-    trumpetInfo24HoursAgo: (
-      results24HoursAgo[1].result as unknown as bigint[]
-    ).map((value, index) =>
-      index <= 1 ? Number(value) : Number(formatEther(value))
-    ),
+    // futuresInfo24HoursAgo: (
+    //   results24HoursAgo[0].result as unknown as bigint[]
+    // ).map((value, index) =>
+    //   index === 0 || index === 5 ? Number(value) : Number(formatEther(value))
+    // ),
+    // trumpetInfo24HoursAgo: (
+    //   results24HoursAgo[1].result as unknown as bigint[]
+    // ).map((value, index) =>
+    //   index <= 1 ? Number(value) : Number(formatEther(value))
+    // ),
   };
 
   return data;

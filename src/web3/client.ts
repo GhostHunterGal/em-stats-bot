@@ -1,4 +1,4 @@
-import { NODE_ENDPOINT } from '../utils/env-vars';
+import { NODE_ENDPOINT } from '../utils/env-vars.js';
 import { createPublicClient, fallback, http } from 'viem';
 import { bsc } from 'viem/chains';
 
@@ -13,10 +13,10 @@ export const client = createPublicClient({
   transport: fallback([chainStack, ankr]),
 });
 
-export const archiveClient = createPublicClient({
-  batch: {
-    multicall: true,
-  },
-  chain: bsc,
-  transport: fallback([ankr]),
-});
+// export const archiveClient = createPublicClient({
+//   batch: {
+//     multicall: true,
+//   },
+//   chain: bsc,
+//   transport: fallback([ankr]),
+// });

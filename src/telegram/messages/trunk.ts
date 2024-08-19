@@ -1,6 +1,6 @@
-import { BlockchainData } from '../../web3/multicall';
-import { Calculations } from '../../web3/calculations';
-import { formatNumberWithSuffix, numFor3 } from '../../utils/formats';
+import { BlockchainData } from '../../web3/multicall.js';
+import { Calculations } from '../../web3/calculations.js';
+import { formatNumberWithSuffix, numFor3 } from '../../utils/formats.js';
 
 export const trunkMsg = (data: BlockchainData, calcs: Calculations): string => {
   const msg = `

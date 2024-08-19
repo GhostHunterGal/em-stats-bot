@@ -1,6 +1,10 @@
-import { BlockchainData } from '../../web3/multicall';
-import { Calculations } from '../../web3/calculations';
-import { formatNumberWithSuffix, numFor2, numFor3 } from '../../utils/formats';
+import { BlockchainData } from '../../web3/multicall.js';
+import { Calculations } from '../../web3/calculations.js';
+import {
+  formatNumberWithSuffix,
+  numFor2,
+  numFor3,
+} from '../../utils/formats.js';
 
 export const futuresMsg = (
   data: BlockchainData,
@@ -51,34 +55,14 @@ export const futuresMsg = (
     data.trunkTurbineTrunkBalance
   )} ($${formatNumberWithSuffix(calcs.trunkTurbineValue)})</b>
   
-<u>Activity [Past 24Hrs]</u>
-<i>Deposits:</i> <b>$${formatNumberWithSuffix(
-    calcs.futuresTotalDeposited
-  )} [$${formatNumberWithSuffix(
-    calcs.futuresTotalDeposited24HourDifference
-  ).replace('.000', '')}]</b>
+<u>Activity</u>
+<i>Deposits:</i> <b>$${formatNumberWithSuffix(calcs.futuresTotalDeposited)}</b>
 <i>Compounds:</i> <b>$${formatNumberWithSuffix(
     calcs.futuresTotalCompoundDeposited
-  )} [$${formatNumberWithSuffix(
-    calcs.futuresTotalCompoundDeposited24HourDifference
-  ).replace('.000', '')}]</b>
-<i>Withdrawals:</i> <b>$${formatNumberWithSuffix(
-    calcs.futuresWithdrawals
-  )} [$${formatNumberWithSuffix(
-    calcs.futuresWithdrawals24HourDifference
-  ).replace('.000', '')}]</b>
-<i>Participants:</i> <b>${formatNumberWithSuffix(
-    calcs.futuresTotalUsers
-  )} [${formatNumberWithSuffix(calcs.futuresTotalUsers24HourDifference).replace(
-    '.000',
-    ''
-  )}]</b>
-<i>Transactions:</i> <b>${formatNumberWithSuffix(
-    calcs.futuresTotalTxs
-  )} [${formatNumberWithSuffix(calcs.futuresTotalTxs24HourDifference).replace(
-    '.000',
-    ''
-  )}]</b>
+  )}</b>
+<i>Withdrawals:</i> <b>$${formatNumberWithSuffix(calcs.futuresWithdrawals)}</b>
+<i>Participants:</i> <b>${formatNumberWithSuffix(calcs.futuresTotalUsers)}</b>
+<i>Transactions:</i> <b>${formatNumberWithSuffix(calcs.futuresTotalTxs)}</b>
 `;
 
   return msg;
